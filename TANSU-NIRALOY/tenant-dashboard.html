@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenant Dashboard | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="tenant-dashboard">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Authenticated Tenant Portal</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">
+            Welcome, <span id="tenant-name-display">Tenant</span>
+          </h1>
+          <p class="text-muted">Tenant ID: <code id="tenant-id-display">TEN-...</code> &bull; All rentals and visits mediated centrally by TANSU Niraloy</p>
+        </div>
+        <a href="properties.html" class="btn btn-outline-primary">Browse New Properties</a>
+      </div>
+
+      <!-- KPI Summary Cards (No Wallet, No Escrow) -->
+      <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #E0F2FE; color: #0284C7;">🏠</div>
+          <div class="metric-content">
+            <span class="metric-label">Active Rental</span>
+            <div class="metric-value" id="kpi-active-rental">0 Active</div>
+            <span class="metric-subtext" id="kpi-active-rental-sub">No Active Flat</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #FEF3C7; color: #D97706;">⏳</div>
+          <div class="metric-content">
+            <span class="metric-label">Pending Requests</span>
+            <div class="metric-value" id="kpi-pending-requests">0</div>
+            <span class="metric-subtext" id="kpi-pending-requests-sub">Rent / Visit / Buy</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #FEE2E2; color: #DC2626;">💳</div>
+          <div class="metric-content">
+            <span class="metric-label">Outstanding Due</span>
+            <div class="metric-value" id="kpi-outstanding-due" style="color: var(--color-danger);">৳ 0</div>
+            <span class="metric-subtext" id="kpi-outstanding-due-sub">No Pending Dues</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #DCFCE7; color: #16A34A;">✅</div>
+          <div class="metric-content">
+            <span class="metric-label">Recent Payment</span>
+            <div class="metric-value" id="kpi-recent-payment">৳ 0</div>
+            <span class="metric-subtext" id="kpi-recent-payment-sub">No Records Yet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Layout with Tabs -->
+      <div class="grid dashboard-layout" style="grid-template-columns: 240px 1fr; gap: 2rem;">
+        <!-- Sidebar Navigation -->
+        <div class="card dashboard-sidebar" style="padding: 1rem;">
+          <nav class="flex flex-col gap-1">
+            <a href="#overview" class="btn btn-block text-left dashboard-nav-item active" data-target="section-overview" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+              <span>📊 Overview &amp; Rentals</span>
+            </a>
+            <a href="#requests" class="btn btn-block text-left dashboard-nav-item" data-target="section-requests" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+              <span>📋 My Requests</span>
+            </a>
+            <a href="#dues" class="btn btn-block text-left dashboard-nav-item" data-target="section-dues" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+              <span>💳 Outstanding Dues</span>
+            </a>
+            <a href="#payments" class="btn btn-block text-left dashboard-nav-item" data-target="section-payments" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+              <span>🧾 Payments &amp; Receipts</span>
+            </a>
+            <a href="#support" class="btn btn-block text-left dashboard-nav-item" data-target="section-support" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+              <span>🛠️ Support &amp; Complaints</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Section Content Panes -->
+        <div>
+          <!-- Admin Due Notices Alert Box -->
+          <div id="tenant-notices-container" style="display: none;" class="mb-6"></div>
+
+          <!-- Pane 1: Overview & Active Rental -->
+          <div id="section-overview" class="dashboard-section">
+            <div class="card mb-6">
+              <h3 class="card-title mb-4">Active Tenancy &amp; Lease Specs</h3>
+              <div id="active-rental-container"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Intermediary Governance Summary</h3>
+              </div>
+              <p class="text-muted" style="font-size: 0.9rem; line-height: 1.7;">
+                Your monthly rent is paid directly into TANSU Niraloy's audited clearing account. We generate official receipts with digital verification stamps, and TANSU disburses landlord settlements after property condition validation. You do not need to contact the landlord for rent receipts or repairs.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pane 2: My Requests -->
+          <div id="section-requests" class="dashboard-section" style="display: none;">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Property Inquiries &amp; Visit Requests</h3>
+                <span class="text-muted" style="font-size: 0.85rem;">Mediated by TANSU Desk</span>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Request ID</th>
+                      <th>Property ID</th>
+                      <th>Type</th>
+                      <th>Submission Date</th>
+                      <th>Preferred Schedule</th>
+                      <th>Admin Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tenant-requests-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 3: Outstanding Dues -->
+          <div id="section-dues" class="dashboard-section" style="display: none;">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Current Outstanding Dues &amp; Invoices</h3>
+                <span class="badge badge-pending">Payment Gateway Available</span>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Invoice ID</th>
+                      <th>Description</th>
+                      <th>Billed Amount</th>
+                      <th>Outstanding</th>
+                      <th>Due Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tenant-dues-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 4: Payments & Receipts -->
+          <div id="section-payments" class="dashboard-section" style="display: none;">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Verified Payments &amp; Official Receipts</h3>
+                <span class="text-muted" style="font-size: 0.85rem;">Official TANSU Ledger</span>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Payment ID</th>
+                      <th>Transaction ID</th>
+                      <th>Property</th>
+                      <th>Type</th>
+                      <th>Amount Paid</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tenant-payments-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 5: Support & Complaints -->
+          <div id="section-support" class="dashboard-section" style="display: none;">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Lodge Maintenance Issue or Complaint</h3>
+                <span class="text-muted" style="font-size: 0.85rem;">Direct to TANSU Admin Desk</span>
+              </div>
+              <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+                Never argue with property owners. Report utility issues, plumbing problems, or neighbor disputes directly to TANSU Niraloy. Our operations team inspects and resolves issues.
+              </p>
+
+              <form id="tenant-support-form">
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label for="support-category" class="form-label">Category <span class="required">*</span></label>
+                    <select id="support-category" name="category" class="form-select" required>
+                      <option value="MAINTENANCE">Maintenance &amp; Repairs</option>
+                      <option value="UTILITY_BILL">Utility / Bill Discrepancy</option>
+                      <option value="PAYMENT_ISSUE">Payment Processing Issue</option>
+                      <option value="SECURITY">Building Security or Access</option>
+                      <option value="COMPLAINT">General Complaint / Violation</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="support-subject" class="form-label">Issue Subject <span class="required">*</span></label>
+                    <input type="text" id="support-subject" name="subject" class="form-control" placeholder="e.g. Master bathroom pipe leakage" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="support-description" class="form-label">Detailed Description <span class="required">*</span></label>
+                  <textarea id="support-description" name="description" class="form-control" rows="4" placeholder="Provide complete facts, location inside flat, and urgency..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                  Submit Ticket to TANSU Admin
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/tenant.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      TenantController.init();
+    });
+  </script>
+</body>
+</html>

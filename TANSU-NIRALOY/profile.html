@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="profile">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 800px;">
+      <div class="mb-6">
+        <span class="section-subtitle">Account Management</span>
+        <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">My Profile</h1>
+        <p class="text-muted">Manage your verified identity, credentials, and contact preferences.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6">
+        <!-- Profile Identity Card -->
+        <div class="card text-center" style="grid-column: span 1; padding: 2rem 1.5rem;">
+          <div id="profile-avatar-large" style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--color-primary-light); color: var(--color-accent); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; margin: 0 auto 1rem auto; border: 2px solid var(--color-accent);">
+            U
+          </div>
+          <h3 id="profile-card-name" style="font-size: 1.25rem; margin-bottom: 0.25rem;">User Name</h3>
+          <span id="profile-card-role" class="badge badge-verified" style="margin-bottom: 1rem;">TENANT</span>
+
+          <div style="text-align: left; font-size: 0.85rem; border-top: 1px solid var(--color-border); padding-top: 1rem; margin-top: 1rem;">
+            <div class="mb-2"><strong>User ID:</strong> <code id="profile-card-id">UID-...</code></div>
+            <div class="mb-2"><strong>Status:</strong> <span style="color: var(--color-success);">● Active &amp; Verified</span></div>
+            <div><strong>Intermediary Desk:</strong> Dhaka HQ</div>
+          </div>
+        </div>
+
+        <!-- Profile Details Form -->
+        <div class="card" style="grid-column: span 2; padding: 2rem;">
+          <h3 class="card-title mb-4">Personal Details &amp; Contact</h3>
+
+          <form id="profile-update-form" novalidate>
+            <div class="form-group">
+              <label for="profile-name" class="form-label">Full Legal Name</label>
+              <input type="text" id="profile-name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="profile-email" class="form-label">Registered Gmail (Immutable ID)</label>
+              <input type="email" id="profile-email" name="email" class="form-control" readonly style="background-color: var(--color-surface-alt); cursor: not-allowed;">
+              <div class="form-hint">Email serves as primary authentication key and cannot be altered without admin verification.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="profile-phone" class="form-label">Contact Phone (Bangladesh)</label>
+              <input type="tel" id="profile-phone" name="phone" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="profile-role-display" class="form-label">Assigned Role</label>
+              <input type="text" id="profile-role-display" class="form-control" readonly style="background-color: var(--color-surface-alt); cursor: not-allowed;">
+            </div>
+
+            <div class="flex justify-between items-center mt-6 pt-4" style="border-top: 1px solid var(--color-border);">
+              <button type="button" class="btn btn-outline" style="color: var(--color-danger); border-color: var(--color-danger);" onclick="Auth.logout()">
+                Sign Out
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save Profile Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = Auth.getCurrentUser();
+      if (!user) {
+        window.location.href = "signin.html?redirect=profile.html";
+        return;
+      }
+
+      document.getElementById("profile-card-name").textContent = user.name;
+      document.getElementById("profile-card-role").textContent = user.role;
+      document.getElementById("profile-card-id").textContent = user.userId;
+      document.getElementById("profile-avatar-large").textContent = user.name.charAt(0).toUpperCase();
+
+      document.getElementById("profile-name").value = user.name;
+      document.getElementById("profile-email").value = user.email;
+      document.getElementById("profile-phone").value = user.phone;
+      document.getElementById("profile-role-display").value = user.role;
+
+      const form = document.getElementById("profile-update-form");
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const updatedName = document.getElementById("profile-name").value.trim();
+        const updatedPhone = document.getElementById("profile-phone").value.trim();
+
+        const phoneCheck = Validation.validateBangladeshPhone(updatedPhone);
+        if (!phoneCheck.valid) {
+          Validation.showError(document.getElementById("profile-phone"), phoneCheck.message);
+          return;
+        }
+
+        user.name = updatedName;
+        user.phone = updatedPhone;
+        Auth.setSession(user);
+
+        Components.showToast("success", "Profile Updated", "Your contact details have been successfully saved.");
+        setTimeout(() => window.location.reload(), 600);
+      };
+    });
+  </script>
+</body>
+</html>

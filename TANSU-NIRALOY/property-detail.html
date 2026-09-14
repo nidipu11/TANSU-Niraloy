@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="properties">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container" id="property-details-container">
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 mb-4" style="font-size: 0.85rem; color: var(--color-text-muted);">
+        <a href="index.html">Home</a> &gt;
+        <a href="properties.html">Properties</a> &gt;
+        <span id="prop-id" style="font-weight: 700; color: var(--color-primary);">PROP-...</span>
+      </div>
+
+      <div class="grid grid-cols-3 gap-8">
+        <!-- Left: Image Gallery & Specs (Col Span 2) -->
+        <div style="grid-column: span 2;">
+          <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 2rem;">
+            <div style="width: 100%; height: 420px; background-color: var(--color-surface-alt); position: relative;">
+              <img id="main-gallery-img" src="" alt="Main Property View" style="width: 100%; height: 100%; object-fit: cover;">
+              <span class="badge badge-verified" style="position: absolute; top: 1rem; left: 1rem; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+                ✓ RAJUK & Title Verified
+              </span>
+            </div>
+            <div id="gallery-thumbnails" class="flex gap-3" style="padding: 1rem; background-color: var(--color-surface); border-top: 1px solid var(--color-border); overflow-x: auto;">
+              <!-- Thumbnails populated by js/properties.js -->
+            </div>
+          </div>
+
+          <!-- Description & Details -->
+          <div class="card mb-6">
+            <h3 class="card-title mb-4">Property Description</h3>
+            <p id="prop-desc" style="line-height: 1.8; color: var(--color-text-main);"></p>
+
+            <h4 style="margin-top: 2rem; margin-bottom: 1rem;">Verified Amenities & Features</h4>
+            <div id="prop-amenities" class="flex gap-2" style="flex-wrap: wrap;"></div>
+          </div>
+
+          <!-- Intermediary Guarantee Notice -->
+          <div class="card" style="background-color: var(--color-info-bg); border-color: rgba(59, 130, 246, 0.3);">
+            <div class="flex gap-4">
+              <div style="font-size: 2rem;">🛡️</div>
+              <div>
+                <h4 style="color: #1E3A8A; margin-bottom: 0.25rem;">TANSU Niraloy Intermediary Assurance</h4>
+                <p style="font-size: 0.88rem; color: #1E40AF; margin-bottom: 0;">
+                  To safeguard both parties from fraud and rental disputes, <strong>direct communication between tenant and owner is strictly forbidden</strong>. TANSU Niraloy field officers escort all viewings, verify legal lease agreements, and handle financial settlements through official institutional channels.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Actions & Pricing Summary (Col Span 1) -->
+        <div>
+          <div class="card" style="position: sticky; top: calc(var(--header-height) + 2rem);">
+            <div class="flex justify-between items-center mb-3">
+              <span id="prop-purpose" class="badge badge-rent">For Rent</span>
+              <span id="prop-type" class="badge" style="background: var(--color-surface-alt); color: var(--color-text-muted);">Family House</span>
+            </div>
+
+            <div id="prop-price" style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-bottom: 0.5rem;">
+              ৳ ...
+            </div>
+
+            <h2 id="prop-title" style="font-size: 1.3rem; margin-bottom: 0.75rem; line-height: 1.3;"></h2>
+            <div id="prop-location" class="text-muted" style="font-size: 0.9rem; margin-bottom: 1.5rem;">
+              📍 ...
+            </div>
+
+            <div style="background-color: var(--color-surface-alt); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem;">
+              <div class="flex justify-between py-1" style="font-size: 0.88rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span class="text-muted">Bedrooms:</span>
+                <strong id="prop-bedrooms">...</strong>
+              </div>
+              <div class="flex justify-between py-1" style="font-size: 0.88rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span class="text-muted">Bathrooms:</span>
+                <strong id="prop-bathrooms">...</strong>
+              </div>
+              <div class="flex justify-between py-1" style="font-size: 0.88rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span class="text-muted">Floor Area:</span>
+                <strong id="prop-area">...</strong>
+              </div>
+              <div class="flex justify-between py-1" style="font-size: 0.88rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span class="text-muted">Owner ID:</span>
+                <code id="prop-owner-id">...</code>
+              </div>
+              <div class="flex justify-between py-1" style="font-size: 0.88rem;">
+                <span class="text-muted">Listing Date:</span>
+                <span id="prop-created" class="text-muted">...</span>
+              </div>
+            </div>
+
+            <!-- Intermediary Protected Actions -->
+            <div class="flex flex-col gap-3">
+              <button id="btn-request-rent" class="btn btn-primary btn-block">
+                📋 Request to Rent (via TANSU)
+              </button>
+              <button id="btn-request-buy" class="btn btn-primary btn-block" style="display: none;">
+                🤝 Request to Buy (via TANSU)
+              </button>
+              <button id="btn-request-visit" class="btn btn-outline-primary btn-block">
+                📅 Schedule Property Visit
+              </button>
+            </div>
+
+            <div class="text-center mt-4" style="font-size: 0.78rem; color: var(--color-text-muted);">
+              All requests are directly reviewed and processed by TANSU Niraloy Intermediary Admin.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Structured Intermediary Request Modal -->
+  <div class="modal-backdrop" id="request-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Submit <span id="modal-request-type">RENT</span> Request</h3>
+        <button type="button" class="modal-close-btn" onclick="Components.closeModal('request-modal')">&times;</button>
+      </div>
+      <form id="intermediary-request-form">
+        <div class="modal-body">
+          <div style="background-color: var(--color-surface-alt); padding: 0.75rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.85rem;">
+            <div><strong>Target Property:</strong> <span id="modal-prop-title"></span></div>
+            <div><strong>Authenticated Tenant:</strong> <span id="modal-tenant-name"></span></div>
+          </div>
+
+          <input type="hidden" id="modal-prop-id" name="propertyId">
+          <input type="hidden" id="modal-tenant-id" name="tenantId">
+
+          <!-- Visit specifics -->
+          <div id="visit-specific-fields" style="display: none;">
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="visit-date" class="form-label">Preferred Date <span class="required">*</span></label>
+                <input type="date" id="visit-date" name="preferredDate" class="form-control">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="visit-time" class="form-label">Preferred Time <span class="required">*</span></label>
+                <input type="time" id="visit-time" name="preferredTime" class="form-control">
+              </div>
+            </div>
+            <p class="form-hint mb-3">TANSU field officers will confirm availability within 2 business hours.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="request-notes" class="form-label">Notes for TANSU Intermediary Officer</label>
+            <textarea id="request-notes" name="message" class="form-control" rows="3" placeholder="State your proposed move-in date, family size, or visit preferences..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Components.closeModal('request-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit to TANSU Desk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Guest Authentication Required Modal -->
+  <div class="modal-backdrop" id="guest-auth-modal">
+    <div class="modal-dialog" style="max-width: 500px; text-align: center; box-shadow: var(--shadow-xl);">
+      <div class="modal-header" style="border: none; padding: 1.25rem 1.5rem 0.5rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge badge-pending" style="font-size: 0.8rem;">
+          🛡️ TANSU Intermediary Protection
+        </span>
+        <button type="button" class="modal-close-btn" onclick="Components.closeModal('guest-auth-modal')">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 1rem 2rem 2rem 2rem;">
+        <div style="width: 72px; height: 72px; border-radius: 50%; background: #EFF6FF; border: 2px solid var(--color-secondary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; font-size: 2.2rem;">
+          🔐
+        </div>
+        <h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 0.5rem; font-weight: 700;">
+          Sign In or Sign Up to Continue
+        </h3>
+        <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.75rem;">
+          To submit a <span id="guest-action-label" style="font-weight: 700; color: var(--color-accent-dark);">Rental</span> request for 
+          <strong id="guest-modal-prop-title" style="color: var(--color-primary);">this property</strong> or schedule an escorted physical visit, please sign in or register as a <strong>Tenant</strong>.
+        </p>
+
+        <div style="background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.82rem; color: var(--color-text-main);">
+          <div style="font-weight: 700; color: var(--color-primary); margin-bottom: 0.25rem;">✨ Why Tenant Authentication is Mandatory:</div>
+          <div style="color: var(--color-text-muted);">&bull; Protects you against illegal double-renting and scam broker charges</div>
+          <div style="color: var(--color-text-muted);">&bull; Escorted visits with a designated TANSU field officer</div>
+          <div style="color: var(--color-text-muted);">&bull; Admin-vetted tenancy agreements and electronic escrow payments</div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <a id="guest-modal-signin-btn" href="signin.html?role=TENANT" class="btn btn-primary btn-block" style="font-weight: 700; padding: 0.85rem 1.25rem; font-size: 1rem;">
+            🔑 Sign In as Tenant
+          </a>
+          <a id="guest-modal-signup-btn" href="signup.html?role=TENANT" class="btn btn-outline btn-block" style="font-weight: 700; padding: 0.85rem 1.25rem; font-size: 1rem;">
+            📝 Create Free Tenant Account (Sign Up)
+          </a>
+        </div>
+
+        <div style="margin-top: 1.25rem; font-size: 0.78rem; color: var(--color-text-muted);">
+          Have questions? Contact TANSU Intermediary Desk: <a href="mailto:desk@tansu-niraloy.com.bd" style="color: var(--color-secondary); font-weight: 600;">desk@tansu-niraloy.com.bd</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      PropertiesController.initDetails();
+    });
+  </script>
+</body>
+</html>

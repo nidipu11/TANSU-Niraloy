@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Checkout | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* Dedicated Styling for Two-Column Payment Checkout Interface */
+    .payment-wrapper {
+      min-height: 100vh;
+      background: #F8FAFC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .payment-modal-card {
+      max-width: 980px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 40px -15px rgba(15, 30, 54, 0.12), 0 0 0 1px var(--color-border);
+      overflow: hidden;
+    }
+
+    .payment-layout-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+    }
+
+    /* Left Column: Summary */
+    .payment-summary-col {
+      background-color: #F1F5F9;
+      border-right: 1px solid var(--color-border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .payment-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .payment-hero-amount-wrap {
+      margin-bottom: 2rem;
+      background: #FFFFFF;
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .payment-order-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .payment-order-line.total-line {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      border-top: 1px dashed var(--color-border);
+      padding-top: 0.85rem;
+      margin-top: 0.85rem;
+    }
+
+    /* Right Column: Payment Methods */
+    .payment-methods-col {
+      padding: 2.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .payment-methods-nav {
+      display: flex;
+      border-bottom: 1px solid var(--color-border);
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .payment-method-tab {
+      background: none;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      position: relative;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .payment-method-tab:hover {
+      color: var(--color-primary);
+    }
+
+    .payment-method-tab.active {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .payment-method-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--color-primary);
+    }
+
+    .mfs-provider-card {
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      background-color: #FFFFFF;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mfs-provider-card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .mfs-provider-card.selected {
+      border-color: var(--color-primary);
+      background-color: #F8FAFC;
+      box-shadow: 0 0 0 2px rgba(15, 30, 54, 0.18), 0 6px 16px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .mfs-logo-wrapper {
+      height: 48px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .mfs-logo-wrapper img {
+      max-height: 42px;
+      max-width: 88%;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+      transition: transform var(--transition-fast);
+    }
+
+    .mfs-provider-card:hover .mfs-logo-wrapper img {
+      transform: scale(1.06);
+    }
+
+    .security-badges-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-wrapper">
+    <div class="payment-modal-card">
+      <div class="payment-layout-grid">
+
+        <!-- LEFT COLUMN: Payment & Order Summary -->
+        <div class="payment-summary-col">
+          <div>
+            <div class="flex justify-between items-center mb-6">
+              <a href="tenant-dashboard.html" class="btn btn-sm btn-outline" style="border-radius: var(--radius-full); padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+                &larr; Back to Dashboard
+              </a>
+              <span style="font-size: 0.75rem; color: var(--color-text-muted); font-family: monospace;">
+                TXN: <span id="pay-transaction-id">TXN-...</span>
+              </span>
+            </div>
+
+            <div class="payment-brand">
+              <div class="brand-symbol" style="width: 36px; height: 36px; font-size: 1rem;">TN</div>
+              <div>
+                <strong style="color: var(--color-primary); font-size: 1.05rem; display: block; line-height: 1.1;">TANSU Niraloy</strong>
+                <span style="font-size: 0.75rem; color: var(--color-accent); text-transform: uppercase; font-weight: 700;">Intermediary Checkout</span>
+              </div>
+            </div>
+
+            <div class="payment-hero-amount-wrap">
+              <div style="font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem;">
+                You are paying
+              </div>
+              <div id="pay-hero-amount" style="font-size: 2.2rem; font-weight: 800; color: var(--color-primary); line-height: 1;">
+                ৳ 0
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <div class="payment-order-line">
+                <span>Subtotal</span>
+                <strong id="pay-subtotal">৳ 0</strong>
+              </div>
+              <div class="payment-order-line">
+                <span>Intermediary Gateway Fee</span>
+                <span id="pay-fee">৳ 150</span>
+              </div>
+              <div class="payment-order-line">
+                <span>Discount / Promo</span>
+                <span id="pay-discount" style="color: var(--color-success);">- ৳ 0</span>
+              </div>
+              <div class="payment-order-line total-line">
+                <span>Total Payable</span>
+                <span id="pay-total-amount">৳ 0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: Verified Property & Tenant Info -->
+          <div style="background: rgba(255,255,255,0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); font-size: 0.82rem;">
+            <div style="font-weight: 700; color: var(--color-primary); margin-bottom: 0.35rem;">Billing Breakdown</div>
+            <div class="mb-1 text-muted">Property ID: <strong id="pay-property-id" style="color: var(--color-primary);">PROP-...</strong></div>
+            <div class="mb-1 text-muted">Type: <span id="pay-type" style="color: var(--color-primary);">Monthly Rent</span></div>
+            <div class="text-muted">Billed To: <span id="pay-tenant-info" style="color: var(--color-primary);">Tenant</span></div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Payment Method Selection & Checkout -->
+        <div class="payment-methods-col">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <h2 style="font-size: 1.5rem; margin-bottom: 0.2rem;">Welcome Back</h2>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 0;">Select your preferred payment channel for verified clearance</p>
+              </div>
+              <span class="badge badge-verified" style="font-size: 0.72rem;">256-Bit SSL</span>
+            </div>
+
+            <!-- Payment Methods Tabs -->
+            <div class="payment-methods-nav">
+              <button type="button" class="payment-method-tab active" data-method="CARD">
+                💳 Credit / Debit Card
+              </button>
+              <button type="button" class="payment-method-tab" data-method="MOBILE_BANKING">
+                📱 Mobile Banking
+              </button>
+              <button type="button" class="payment-method-tab" data-method="NET_BANKING">
+                🏛️ Net Banking
+              </button>
+              <button type="button" class="payment-method-tab" data-method="EMI">
+                🗓️ EMI Option
+              </button>
+            </div>
+
+            <!-- TAB 1: CARD PAYMENT FORM -->
+            <div id="panel-card" class="payment-method-panel">
+              <div class="form-group mb-3">
+                <label for="card-number" class="form-label">Card Number <span class="required">*</span></label>
+                <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" required>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 mb-3">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="card-expiry" class="form-label">Expiration (MM/YY) <span class="required">*</span></label>
+                  <input type="text" id="card-expiry" class="form-control" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="card-cvv" class="form-label">CVV / CVC <span class="required">*</span></label>
+                  <input type="password" id="card-cvv" class="form-control" placeholder="•••" maxlength="4" required>
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="card-holder" class="form-label">Cardholder Name <span class="required">*</span></label>
+                <input type="text" id="card-holder" class="form-control" placeholder="Full name as printed on card" required>
+              </div>
+
+              <div class="form-group flex items-center gap-2 mb-4">
+                <input type="checkbox" id="remember-card" style="accent-color: var(--color-primary); cursor: pointer;">
+                <label for="remember-card" style="font-size: 0.85rem; color: var(--color-text-muted); cursor: pointer; margin-bottom: 0;">
+                  Remember this card for future monthly rent billing
+                </label>
+              </div>
+            </div>
+
+            <!-- TAB 2: MOBILE BANKING (bKash / Nagad / Rocket) -->
+            <div id="panel-mobile_banking" class="payment-method-panel" style="display: none;">
+              <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 1rem;">
+                Select your Bangladesh MFS provider to complete the transaction:
+              </p>
+              <div class="grid grid-cols-3 gap-3 mb-4">
+                <div class="mfs-provider-card selected" data-provider="bKash" onclick="document.querySelectorAll('.mfs-provider-card').forEach(c => c.classList.remove('selected')); this.classList.add('selected');">
+                  <div class="mfs-logo-wrapper">
+                    <img src="assets/logos/bkash.png" alt="bKash Logo">
+                  </div>
+                  <strong style="font-size: 0.92rem; color: #D12053; margin-bottom: 0.15rem;">bKash</strong>
+                  <div style="font-size: 0.72rem; color: var(--color-text-muted);">Direct Wallet</div>
+                </div>
+                <div class="mfs-provider-card" data-provider="Nagad" onclick="document.querySelectorAll('.mfs-provider-card').forEach(c => c.classList.remove('selected')); this.classList.add('selected');">
+                  <div class="mfs-logo-wrapper">
+                    <img src="assets/logos/nagad.png" alt="Nagad Logo">
+                  </div>
+                  <strong style="font-size: 0.92rem; color: #E31B23; margin-bottom: 0.15rem;">Nagad</strong>
+                  <div style="font-size: 0.72rem; color: var(--color-text-muted);">Postal MFS</div>
+                </div>
+                <div class="mfs-provider-card" data-provider="Rocket" onclick="document.querySelectorAll('.mfs-provider-card').forEach(c => c.classList.remove('selected')); this.classList.add('selected');">
+                  <div class="mfs-logo-wrapper">
+                    <img src="assets/logos/rocket.png" alt="Rocket Logo">
+                  </div>
+                  <strong style="font-size: 0.92rem; color: #8C3494; margin-bottom: 0.15rem;">Rocket</strong>
+                  <div style="font-size: 0.72rem; color: var(--color-text-muted);">DBBL Mobile</div>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="mfs-mobile-num" class="form-label">MFS Mobile Account Number</label>
+                <input type="tel" id="mfs-mobile-num" class="form-control" placeholder="01XXXXXXXXX">
+              </div>
+            </div>
+
+            <!-- TAB 3: NET BANKING -->
+            <div id="panel-net_banking" class="payment-method-panel" style="display: none;">
+              <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 1rem;">
+                Select your connected Bangladesh Bank Internet Banking gateway:
+              </p>
+              <div class="form-group mb-4">
+                <select class="form-select">
+                  <option>Dutch-Bangla Bank (NexusPay / Internet Banking)</option>
+                  <option>BRAC Bank (Astha App)</option>
+                  <option>City Bank (CityTouch)</option>
+                  <option>Eastern Bank (EBL SKYBANKING)</option>
+                  <option>Islami Bank Bangladesh (CellFin)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- TAB 4: EMI OPTIONS -->
+            <div id="panel-emi" class="payment-method-panel" style="display: none;">
+              <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 1rem;">
+                Flat purchase deposits or advance payments qualify for credit card EMI:
+              </p>
+              <div class="form-group mb-4">
+                <label class="form-label">Select EMI Tenure</label>
+                <select class="form-select">
+                  <option>3 Months (0% Interest with Partner Banks)</option>
+                  <option>6 Months (0% Interest with Partner Banks)</option>
+                  <option>12 Months</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Promo Code Accordion/Bar -->
+            <div class="flex gap-2 mb-6" style="background: var(--color-surface-alt); padding: 0.5rem; border-radius: var(--radius-md);">
+              <input type="text" id="promo-input" class="form-control" placeholder="Enter Promo Code (e.g. TANSU500)" style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+              <button type="button" id="btn-apply-promo" class="btn btn-sm btn-outline">Apply</button>
+            </div>
+
+            <!-- Primary Payment CTA Button -->
+            <button type="button" id="btn-pay-action" class="btn btn-primary btn-block btn-lg" style="font-size: 1.1rem; padding: 1rem; letter-spacing: 0.02em;">
+              Pay ৳ 0
+            </button>
+          </div>
+
+          <!-- Bottom Footer Information -->
+          <div>
+            <div class="security-badges-bar">
+              <span>🔒 256-Bit SSL Bank Grade Encryption</span>
+              <span>🛡️ PCI-DSS Level 1 Compliant</span>
+              <span>🇧🇩 Bangladesh Bank Clearing</span>
+            </div>
+            <div class="flex justify-between items-center mt-3" style="font-size: 0.75rem; color: var(--color-text-muted);">
+              <div>
+                <a href="#" onclick="alert('TANSU Terms: All payments are disbursed following physical verification.')">Terms of Service</a> &bull;
+                <a href="#" onclick="alert('Support Desk: 16216 or support@tansu-niraloy.com.bd')">Support &amp; FAQ</a>
+              </div>
+              <span>Secured by TANSU Gateway</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/payments.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      PaymentController.init();
+    });
+  </script>
+</body>
+</html>

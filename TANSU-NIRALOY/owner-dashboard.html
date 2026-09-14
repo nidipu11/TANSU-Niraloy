@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Dashboard | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="owner-dashboard">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Authenticated Landlord Portal</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">
+            Owner Portal: <span id="owner-name-display">Property Owner</span>
+          </h1>
+          <p class="text-muted">Owner ID: <code id="owner-id-display">OWN-...</code> &bull; Verified intermediary settlement protocol</p>
+        </div>
+        <a href="owner-add-property.html" class="btn btn-primary">
+          + Add New Property Listing
+        </a>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-5 gap-4 mb-8" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #EFF6FF; color: #1E40AF;">🏢</div>
+          <div class="metric-content">
+            <span class="metric-label">Total Properties</span>
+            <div class="metric-value" id="kpi-owner-total-props">0</div>
+            <span class="metric-subtext">Registered under Owner ID</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #ECFDF5; color: #047857;">✓</div>
+          <div class="metric-content">
+            <span class="metric-label">Verified Listings</span>
+            <div class="metric-value" id="kpi-owner-verified-props" style="color: var(--color-success);">0</div>
+            <span class="metric-subtext">Active in Public Catalog</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #EEF2FF; color: #4F46E5;">📊</div>
+          <div class="metric-content">
+            <span class="metric-label">Total Earnings</span>
+            <div class="metric-value" id="kpi-owner-total-earned" style="color: #4F46E5;">৳ 0</div>
+            <span class="metric-subtext">From Rented &amp; Sold Flats</span>
+          </div>
+        </div>
+
+        <div class="metric-card" style="border: 2px solid var(--color-accent); background: #FFFBEB;">
+          <div class="metric-icon" style="background-color: #FEF3C7; color: #D97706;">💰</div>
+          <div class="metric-content">
+            <span class="metric-label">Available Balance</span>
+            <div class="metric-value" id="kpi-owner-available-balance" style="color: var(--color-accent-dark); font-weight: 800;">৳ 0</div>
+            <div style="margin-top: 0.35rem;">
+              <button class="btn btn-sm btn-accent" onclick="OwnerController.openWithdrawModal()" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; font-weight: 700; width: 100%;">
+                💸 Request Withdrawal
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon" style="background-color: #F0FDF4; color: #16A34A;">🏦</div>
+          <div class="metric-content">
+            <span class="metric-label">Total Withdrawn</span>
+            <div class="metric-value" id="kpi-owner-total-received" style="color: var(--color-success);">৳ 0</div>
+            <span class="metric-subtext">Disbursed to Your Account</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Nav Anchor Tabs -->
+      <div class="flex gap-2 mb-6" style="flex-wrap: wrap;">
+        <a href="#section-props" class="btn btn-sm btn-outline">🏠 My Properties</a>
+        <a href="#section-earnings" class="btn btn-sm btn-outline">📈 Rented/Sold Earnings Ledger</a>
+        <a href="#section-withdrawals" class="btn btn-sm btn-outline">💳 Withdrawal Requests &amp; Payouts</a>
+      </div>
+
+      <!-- Owned Listings Table -->
+      <div class="card mb-8" id="section-props">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">My Listed Properties</h3>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 0;">
+              Only properties matching your <code>ownerId</code> are displayed. Administrative verification is required before any listing goes live.
+            </p>
+          </div>
+          <a href="owner-add-property.html" class="btn btn-sm btn-outline">+ Add Listing</a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Property ID</th>
+                <th>Title &amp; Location</th>
+                <th>Purpose</th>
+                <th>Asking Price</th>
+                <th>Verification Status</th>
+                <th>Availability</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="owner-properties-table-body">
+              <!-- Rendered by js/owner.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section: Verified Flat Rented & Sold Earnings Ledger -->
+      <div class="card mb-8" id="section-earnings">
+        <div class="card-header flex justify-between items-center" style="background: #F8FAFC; border-bottom: 1px solid var(--color-border); padding: 1.25rem;">
+          <div>
+            <div class="flex items-center gap-2">
+              <span style="font-size: 1.25rem;">📈</span>
+              <h3 class="card-title" style="margin-bottom: 0;">Verified Flat Rented &amp; Sold Earnings Ledger</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem; margin-bottom: 0;">
+              When your verified flats are rented or bought by tenants/buyers through TANSU Niraloy, the revenue is credited directly to your owner portfolio.
+            </p>
+          </div>
+          <div>
+            <span class="badge badge-verified" style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+              Verified Central Intermediary Collection
+            </span>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Property ID &amp; Flat</th>
+                <th>Transaction Type</th>
+                <th>Tenant / Buyer</th>
+                <th>Agreement Rate</th>
+                <th>Credited Earnings</th>
+                <th>Lease / Booking Status</th>
+                <th>Balance Availability</th>
+              </tr>
+            </thead>
+            <tbody id="owner-earnings-table-body">
+              <!-- Populated by OwnerController.loadOwnerEarnings() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section: Owner Settlements & Withdrawal Requests Table -->
+      <div class="card mb-8" id="section-withdrawals">
+        <div class="card-header flex justify-between items-center" style="background: #F8FAFC; border-bottom: 1px solid var(--color-border); padding: 1.25rem;">
+          <div>
+            <div class="flex items-center gap-2">
+              <span style="font-size: 1.25rem;">🏦</span>
+              <h3 class="card-title" style="margin-bottom: 0;">Withdrawal Requests &amp; Payout History</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem; margin-bottom: 0;">
+              Submit withdrawal requests to transfer your accumulated rental and sale earnings to your Bank Account or Mobile Financial Services (bKash/Nagad).
+            </p>
+          </div>
+          <div>
+            <button class="btn btn-primary" onclick="OwnerController.openWithdrawModal()">
+              💸 Request Withdrawal
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Reference / Trx ID</th>
+                <th>Type</th>
+                <th>Requested / Entitled Amount</th>
+                <th>Payout Channel &amp; Account</th>
+                <th>Submission Date</th>
+                <th>Status</th>
+                <th>Disbursement Clearance</th>
+              </tr>
+            </thead>
+            <tbody id="owner-settlements-table-body">
+              <!-- Rendered by js/owner.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: REQUEST WITHDRAWAL -->
+  <!-- ============================================================= -->
+  <div id="modal-request-withdrawal" class="modal-backdrop">
+    <div class="modal-dialog" style="max-width: 540px;">
+      <div class="modal-header" style="background: #F0FDF4; border-bottom: 1px solid #BBF7D0;">
+        <div class="flex items-center gap-2">
+          <span style="font-size: 1.4rem;">💸</span>
+          <h3 class="modal-title" style="color: #166534;">Submit Earnings Withdrawal Request</h3>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="Components.closeModal('modal-request-withdrawal')">&times;</button>
+      </div>
+
+      <form onsubmit="OwnerController.submitWithdrawalRequest(event)">
+        <div class="modal-body" style="padding: 1.5rem;">
+          <!-- Balance banner -->
+          <div style="background: #FEF3C7; border: 1px solid #FDE68A; border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.25rem;">
+            <div class="flex justify-between items-center">
+              <span style="font-weight: 600; color: #92400E; font-size: 0.9rem;">Available Balance to Withdraw:</span>
+              <span id="modal-available-balance-display" style="font-size: 1.3rem; font-weight: 800; color: #B45309;">৳ 0</span>
+            </div>
+            <small class="text-muted" style="display: block; margin-top: 0.25rem;">
+              Admin will review and disburse the fund directly to your designated bank account or MFS number.
+            </small>
+          </div>
+
+          <!-- Withdrawal Amount -->
+          <div class="form-group mb-4">
+            <label for="withdraw-amount" class="form-label" style="font-weight: 700;">
+              Withdrawal Amount (৳) <span style="color:var(--color-danger)">*</span>
+            </label>
+            <div style="position: relative;">
+              <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-text-muted);">৳</span>
+              <input type="number" id="withdraw-amount" class="form-control" placeholder="Enter amount to withdraw (e.g. 45000)" style="padding-left: 28px;" required min="500">
+            </div>
+          </div>
+
+          <!-- Payout Method -->
+          <div class="form-group mb-4">
+            <label for="withdraw-payout-method" class="form-label" style="font-weight: 700;">
+              Payout Method <span style="color:var(--color-danger)">*</span>
+            </label>
+            <select id="withdraw-payout-method" class="form-control" onchange="OwnerController.togglePayoutFields()" required>
+              <option value="BANK_TRANSFER">Bank Transfer (BEFTN / NPSB)</option>
+              <option value="BKASH">bKash (MFS Personal/Merchant)</option>
+              <option value="NAGAD">Nagad (MFS)</option>
+              <option value="ROCKET">Dutch-Bangla Rocket (MFS)</option>
+            </select>
+          </div>
+
+          <!-- Bank Fields -->
+          <div id="payout-bank-fields">
+            <div class="form-group mb-3">
+              <label for="withdraw-bank-name" class="form-label">Bank Name</label>
+              <input type="text" id="withdraw-bank-name" class="form-control" placeholder="e.g. BRAC Bank PLC, City Bank, DBBL">
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <label for="withdraw-bank-account" class="form-label">Account Number</label>
+                <input type="text" id="withdraw-bank-account" class="form-control" placeholder="Account Number">
+              </div>
+              <div>
+                <label for="withdraw-bank-holder" class="form-label">Account Holder Name</label>
+                <input type="text" id="withdraw-bank-holder" class="form-control" placeholder="Account Holder Name">
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="withdraw-bank-branch" class="form-label">Branch &amp; Routing No. (Optional)</label>
+              <input type="text" id="withdraw-bank-branch" class="form-control" placeholder="e.g. Dhanmondi Branch, Routing: 06026...">
+            </div>
+          </div>
+
+          <!-- MFS Fields -->
+          <div id="payout-mfs-fields" style="display: none;">
+            <div class="form-group mb-3">
+              <label for="withdraw-mfs-number" class="form-label">MFS Mobile Account Number</label>
+              <input type="text" id="withdraw-mfs-number" class="form-control" placeholder="017XXXXXXXX">
+            </div>
+            <div class="form-group mb-3">
+              <label for="withdraw-mfs-type" class="form-label">Account Type</label>
+              <select id="withdraw-mfs-type" class="form-control">
+                <option value="Personal">Personal Account</option>
+                <option value="Merchant">Merchant Account</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Remarks / Note -->
+          <div class="form-group mb-3">
+            <label for="withdraw-note" class="form-label">Note / Reference (Optional)</label>
+            <input type="text" id="withdraw-note" class="form-control" placeholder="e.g. Rental withdrawal for September 2026">
+          </div>
+        </div>
+
+        <div class="modal-footer flex justify-between" style="padding: 1rem 1.5rem; background: #F8FAFC; border-top: 1px solid var(--color-border);">
+          <button type="button" class="btn btn-outline" onclick="Components.closeModal('modal-request-withdrawal')">Cancel</button>
+          <button type="submit" id="btn-submit-withdraw" class="btn btn-primary" style="font-weight: 700;">
+            🚀 Submit Withdrawal Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/owner.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      OwnerController.initDashboard();
+    });
+  </script>
+</body>
+</html>

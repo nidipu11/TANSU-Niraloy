@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Settings &amp; Java Integration | TANSU Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="admin-settings">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 860px;">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">System Parameters</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">Platform &amp; Backend Configuration</h1>
+          <p class="text-muted">Configure future Java Spring Boot API endpoints, intermediary surcharge, and inspection rules.</p>
+        </div>
+        <a href="admin-dashboard.html" class="btn btn-outline">&larr; Dashboard</a>
+      </div>
+
+      <div class="card mb-6" style="padding: 2rem;">
+        <h3 class="card-title mb-4">Java Spring Boot Integration Endpoints</h3>
+        <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+          The frontend is pre-configured via <code>js/api.js</code> to connect seamlessly to your Java backend. Update the base URL below or within <code>js/api.js</code>.
+        </p>
+
+        <div class="form-group">
+          <label for="setting-api-url" class="form-label">Java API Base URL</label>
+          <input type="url" id="setting-api-url" class="form-control" placeholder="e.g. http://localhost:8080 or https://api.tansu-niraloy.com.bd" value="">
+          <div class="form-hint">Leave empty to use client-side demonstration repository during frontend testing.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Active Backend API Mapping Status</label>
+          <div style="background: var(--color-surface-alt); padding: 1rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.82rem; line-height: 1.8;">
+            <div>✓ GET /api/properties &rarr; Public Catalog</div>
+            <div>✓ GET /api/properties/{id} &rarr; Detail &amp; Image Specs</div>
+            <div>✓ POST /api/auth/signin &rarr; JWT Authentication</div>
+            <div>✓ POST /api/auth/signup &rarr; Identity Registration</div>
+            <div>✓ POST /api/tenant/requests &rarr; Intermediary Mediation Queue</div>
+            <div>✓ POST /api/owner/properties &rarr; Multi-part Image &amp; Deed Upload</div>
+            <div>✓ GET /api/admin/listings/pending &rarr; Verification Desk</div>
+            <div>✓ POST /api/payments &rarr; Settlement Gateway Handshake</div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="Components.showToast('success', 'Configuration Saved', 'Target Java backend parameter updated in frontend configuration.');">
+          Save Configuration
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

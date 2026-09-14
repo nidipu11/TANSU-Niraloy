@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Property Listing | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="owner-add-property">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 860px;">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Owner Submission Protocol</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">Submit Property for Verification</h1>
+          <p class="text-muted">All listings undergo mandatory administrative inspection before public catalog inclusion.</p>
+        </div>
+        <a href="owner-dashboard.html" class="btn btn-outline">&larr; Back to Dashboard</a>
+      </div>
+
+      <div class="card" style="padding: 2.5rem;">
+        <form id="property-form" novalidate>
+          <div class="form-group">
+            <label for="property-title" class="form-label">Property Title <span class="required">*</span></label>
+            <input
+              id="property-title"
+              name="title"
+              type="text"
+              class="form-control"
+              placeholder="e.g. Modern South-Facing 3-BHK Apartment with Balcony"
+              required
+            >
+          </div>
+
+          <div class="grid grid-cols-3 gap-4">
+            <div class="form-group">
+              <label for="property-location" class="form-label">Location (Dhaka) <span class="required">*</span></label>
+              <select id="property-location" name="location" class="form-select" required>
+                <option value="Gulshan">Gulshan</option>
+                <option value="Banani">Banani</option>
+                <option value="Dhanmondi">Dhanmondi</option>
+                <option value="Uttara">Uttara</option>
+                <option value="Mirpur">Mirpur</option>
+                <option value="Bashundhara">Bashundhara</option>
+                <option value="Mohammadpur">Mohammadpur</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="property-type" class="form-label">Property Classification <span class="required">*</span></label>
+              <select id="property-type" name="propertyType" class="form-select" required>
+                <option value="FAMILY_HOUSE">Family House</option>
+                <option value="BACHELOR_HOUSE">Bachelor House</option>
+                <option value="FLAT_SALE">Flat Sale</option>
+                <option value="PREMIUM_FAMILY_HOUSING">Premium Family Housing</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="property-purpose" class="form-label">Listing Purpose <span class="required">*</span></label>
+              <select id="property-purpose" name="purpose" class="form-select" required>
+                <option value="RENT">For Rent</option>
+                <option value="SALE">For Sale</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-4">
+            <div class="form-group">
+              <label for="property-price" class="form-label">Asking Price (BDT) <span class="required">*</span></label>
+              <input
+                id="property-price"
+                name="price"
+                type="number"
+                class="form-control"
+                placeholder="e.g. 45000"
+                min="1000"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="property-area" class="form-label">Area (sqft) <span class="required">*</span></label>
+              <input
+                id="property-area"
+                name="area"
+                type="number"
+                class="form-control"
+                placeholder="e.g. 1850"
+                min="100"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="property-bedrooms" class="form-label">Bedrooms <span class="required">*</span></label>
+              <input
+                id="property-bedrooms"
+                name="bedrooms"
+                type="number"
+                class="form-control"
+                value="3"
+                min="0"
+                max="12"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="property-bathrooms" class="form-label">Bathrooms <span class="required">*</span></label>
+              <input
+                id="property-bathrooms"
+                name="bathrooms"
+                type="number"
+                class="form-control"
+                value="3"
+                min="1"
+                max="10"
+                required
+              >
+            </div>
+          </div>
+
+          <!-- Amenities Selection -->
+          <div class="form-group">
+            <label class="form-label">Verified Amenities Available</label>
+            <div class="grid grid-cols-4 gap-2" style="font-size: 0.88rem;">
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="Elevator" checked> Elevator</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="24/7 Generator" checked> Generator Backup</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="Car Parking" checked> Car Parking</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="Security Guard" checked> Security Guard</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="CCTV"> CCTV Surveillance</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="Titas Gas Connection"> Gas Line</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="Balcony" checked> Balcony</label>
+              <label class="flex items-center gap-2"><input type="checkbox" name="amenities" value="Gym"> Fitness Center</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="property-description" class="form-label">Detailed Description &amp; House Rules <span class="required">*</span></label>
+            <textarea
+              id="property-description"
+              name="description"
+              class="form-control"
+              rows="4"
+              placeholder="State floor level, orientation (e.g. south-facing), nearby landmarks, utility bills inclusion, or family preferences..."
+              required
+            ></textarea>
+          </div>
+
+          <!-- Image Upload & Preview Manager -->
+          <div class="form-group" style="border: 2px dashed var(--color-border); padding: 1.5rem; border-radius: var(--radius-md); background-color: var(--color-surface-alt);">
+            <label for="property-images" class="form-label" style="font-size: 0.95rem;">Upload Property Images</label>
+            <p class="form-hint" style="margin-top: 0; margin-bottom: 0.75rem;">
+              Select multiple photos. Max 5MB each (JPG, PNG, WEBP). Previewed locally in browser for this stage; future Java backend handles storage upload.
+            </p>
+            <input
+              id="property-images"
+              name="images"
+              type="file"
+              class="form-control mb-3"
+              accept="image/png, image/jpeg, image/webp"
+              multiple
+            >
+
+            <div id="image-previews-container" style="min-height: 40px;">
+              <p class="text-muted" style="font-size: 0.85rem;">No images selected yet.</p>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center mt-6 pt-4" style="border-top: 1px solid var(--color-border);">
+            <a href="owner-dashboard.html" class="btn btn-outline">Cancel</a>
+            <button type="submit" id="btn-submit-property" class="btn btn-primary btn-lg">
+              Submit to TANSU Admin Desk
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/owner.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      OwnerController.initPropertyForm(false);
+    });
+  </script>
+</body>
+</html>

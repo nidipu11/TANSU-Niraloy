@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Administration | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="admin-dashboard">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Central Intermediary Control</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">TANSU Administration Console</h1>
+          <p class="text-muted">Platform-wide verification, escrow clearing, and dispute-free intermediary management</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="badge badge-verified" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+            ● Intermediary Desk Active
+          </span>
+        </div>
+      </div>
+
+      <!-- Admin Layout with Sidebar -->
+      <div class="grid dashboard-layout" style="grid-template-columns: 260px 1fr; gap: 2rem;">
+        <!-- Admin Sidebar -->
+        <div class="card dashboard-sidebar" style="padding: 1rem;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase; padding: 0.5rem 0.75rem; letter-spacing: 0.05em;">
+            Intermediary Operations
+          </div>
+          <nav class="flex flex-col gap-1">
+            <a href="admin-dashboard.html" class="btn btn-block text-left btn-primary" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>📊 Central Dashboard</span>
+            </a>
+            <a href="admin-verify-listings.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>🔍 Verify Listings</span>
+            </a>
+            <a href="admin-verified-properties.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>🏢 Verified Properties</span>
+            </a>
+            <a href="admin-rental-requests.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>📋 Rental Requests</span>
+            </a>
+            <a href="admin-purchase-requests.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>🤝 Purchase Requests</span>
+            </a>
+            <a href="admin-visit-requests.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>📅 Visit Requests</span>
+            </a>
+            <a href="admin-finance.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>💳 Finance &amp; Settlements</span>
+            </a>
+            <a href="admin-transactions.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>🧾 Transactions Ledger</span>
+            </a>
+            <a href="admin-support.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>🛠️ Complaints &amp; Support</span>
+            </a>
+            <a href="admin-reports.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>📈 Reports &amp; Vetting</span>
+            </a>
+            <a href="admin-settings.html" class="btn btn-block text-left btn-outline" style="justify-content: flex-start; padding: 0.65rem 1rem;">
+              <span>⚙️ System Settings</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Main Admin Content Area -->
+        <div>
+          <!-- System-level KPI Cards -->
+          <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="metric-card">
+              <div class="metric-icon" style="background-color: #EFF6FF; color: #1E40AF;">🏢</div>
+              <div class="metric-content">
+                <span class="metric-label">Total Properties</span>
+                <div class="metric-value" id="admin-kpi-total-props">6</div>
+                <span class="metric-subtext">Across Dhaka zones</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" style="background-color: #ECFDF5; color: #047857;">✓</div>
+              <div class="metric-content">
+                <span class="metric-label">Verified Listings</span>
+                <div class="metric-value" id="admin-kpi-verified-props" style="color: var(--color-success);">6</div>
+                <span class="metric-subtext">Active in catalog</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" style="background-color: #FFFBEB; color: #B45309;">⏳</div>
+              <div class="metric-content">
+                <span class="metric-label">Pending Listings</span>
+                <div class="metric-value" id="admin-kpi-pending-props" style="color: var(--color-warning);">0</div>
+                <span class="metric-subtext">Needs inspection</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon" style="background-color: #F5F3FF; color: #6D28D9;">🔑</div>
+              <div class="metric-content">
+                <span class="metric-label">Active Rentals</span>
+                <div class="metric-value" id="admin-kpi-active-rentals">5</div>
+                <span class="metric-subtext">Central lease contracts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial Summary Section -->
+          <div class="card mb-8">
+            <div class="card-header">
+              <h3 class="card-title">Intermediary Financial Health Summary</h3>
+              <span class="text-muted" style="font-size: 0.85rem;">Official Audit Ledger</span>
+            </div>
+            <div class="grid grid-cols-4 gap-4">
+              <div style="background: var(--color-surface-alt); padding: 1rem; border-radius: var(--radius-md);">
+                <div class="text-muted" style="font-size: 0.8rem; text-transform: uppercase;">Total Payments Cleared</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">৳ 450,000</div>
+                <div style="font-size: 0.75rem; color: var(--color-success); margin-top: 0.25rem;">● Automated receipts issued</div>
+              </div>
+              <div style="background: var(--color-surface-alt); padding: 1rem; border-radius: var(--radius-md);">
+                <div class="text-muted" style="font-size: 0.8rem; text-transform: uppercase;">Owner Settlements Disbursed</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--color-success); margin-top: 0.25rem;">৳ 340,000</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.25rem;">Direct BEFTN / NPSB</div>
+              </div>
+              <div style="background: var(--color-surface-alt); padding: 1rem; border-radius: var(--radius-md);">
+                <div class="text-muted" style="font-size: 0.8rem; text-transform: uppercase;">Pending Settlements</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--color-warning); margin-top: 0.25rem;">৳ 110,000</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.25rem;">Awaiting audit clearance</div>
+              </div>
+              <div style="background: var(--color-surface-alt); padding: 1rem; border-radius: var(--radius-md);">
+                <div class="text-muted" style="font-size: 0.8rem; text-transform: uppercase;">System Operations Fee</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--color-accent); margin-top: 0.25rem;">৳ 15,200</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.25rem;">Platform maintenance</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Workflows -->
+          <div class="grid grid-cols-2 gap-6">
+            <div class="card">
+              <h4 style="margin-bottom: 0.75rem;">⚡ Urgent Action Queues</h4>
+              <ul style="font-size: 0.9rem; line-height: 2;">
+                <li><a href="admin-verify-listings.html">Review Owner Submissions &rarr;</a></li>
+                <li><a href="admin-visit-requests.html">Assign Field Officers to Escorted Visits &rarr;</a></li>
+                <li><a href="admin-rental-requests.html">Process Formal Lease Drafting &rarr;</a></li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h4 style="margin-bottom: 0.75rem;">🛡️ Intermediary Architecture Rule</h4>
+              <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 0;">
+                Ensure field officers never release property keys until lease contracts are executed and first-month rental settlement has entered the clearing account.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      AdminController.initDashboard();
+    });
+  </script>
+</body>
+</html>

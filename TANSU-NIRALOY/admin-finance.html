@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermediary Finance, Collections &amp; Settlements | TANSU Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .finance-subnav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .finance-subnav-btn {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      background: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .finance-subnav-btn:hover {
+      background: var(--color-surface);
+      color: var(--color-primary);
+    }
+    .finance-subnav-btn.active {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .overdue-pulse {
+      animation: pulseAlert 2s infinite ease-in-out;
+    }
+    @keyframes pulseAlert {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .receipt-box {
+      border: 1px dashed var(--color-border);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      background: var(--color-surface-alt);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body data-page="admin-finance">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Financial Control &amp; Settlement System</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">Central Clearing &amp; Settlements</h1>
+          <p class="text-muted" style="margin-bottom: 0;">
+            Comprehensive intermediary accounting: Tenant Inflows, Outstanding Arrears &amp; Recovery Notices, Landlord Remittances, and Operating Expenses.
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <a href="admin-transactions.html" class="btn btn-outline">Transactions Ledger &rarr;</a>
+          <a href="admin-dashboard.html" class="btn btn-outline">&larr; Dashboard</a>
+        </div>
+      </div>
+
+      <!-- Financial Metrics Summary (4 Pillars) -->
+      <div class="grid grid-cols-4 gap-4 mb-8">
+        <!-- 1. Tenant Payments Inflow -->
+        <div class="metric-card" style="border-top: 4px solid var(--color-success);">
+          <div class="metric-icon" style="background-color: #ECFDF5; color: #047857;">📥</div>
+          <div class="metric-content">
+            <span class="metric-label">Tenant Collections Inflow</span>
+            <div class="metric-value" id="kpi-tenant-inflow" style="color: var(--color-success);">৳ 262,000</div>
+            <span class="metric-subtext">Verified rent &amp; deposit receipts</span>
+          </div>
+        </div>
+
+        <!-- 2. Tenant Outstanding Dues -->
+        <div class="metric-card" style="border-top: 4px solid var(--color-danger);">
+          <div class="metric-icon" style="background-color: #FEE2E2; color: #DC2626;">⚠️</div>
+          <div class="metric-content">
+            <span class="metric-label">Tenant Outstanding Dues</span>
+            <div class="metric-value" id="kpi-tenant-dues" style="color: var(--color-danger);">৳ 178,000</div>
+            <span class="metric-subtext" id="kpi-overdue-count" style="color: var(--color-danger); font-weight: 700;">4 Overdue Accounts</span>
+          </div>
+        </div>
+
+        <!-- 3. Owner Settlements Disbursed -->
+        <div class="metric-card" style="border-top: 4px solid var(--color-secondary);">
+          <div class="metric-icon" style="background-color: #EFF6FF; color: #1E40AF;">🏦</div>
+          <div class="metric-content">
+            <span class="metric-label">Owner Settlements Disbursed</span>
+            <div class="metric-value" id="kpi-owner-settled" style="color: var(--color-primary);">৳ 160,000</div>
+            <span class="metric-subtext">Disbursed to landlord accounts</span>
+          </div>
+        </div>
+
+        <!-- 4. System Operating Expenses -->
+        <div class="metric-card" style="border-top: 4px solid var(--color-warning);">
+          <div class="metric-icon" style="background-color: #FFFBEB; color: #B45309;">📉</div>
+          <div class="metric-content">
+            <span class="metric-label">Operating Expenses</span>
+            <div class="metric-value" id="kpi-operating-expenses">৳ 15,200</div>
+            <span class="metric-subtext">Field inspections &amp; IT cloud</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Section Anchor Navigation -->
+      <div class="finance-subnav">
+        <a href="#section-collections" class="finance-subnav-btn active">
+          📥 Tenant Rent Collections
+        </a>
+        <a href="#section-dues" class="finance-subnav-btn">
+          ⚠️ Tenant Outstanding Dues &amp; Notices
+        </a>
+        <a href="#section-settlements" class="finance-subnav-btn">
+          🏦 Owner Settlements Pipeline
+        </a>
+        <a href="#section-expenses" class="finance-subnav-btn">
+          📉 Operating Expenses
+        </a>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- SECTION 1: TENANT RENT COLLECTIONS & INFLOW LEDGER -->
+      <!-- ============================================================= -->
+      <div class="card mb-8" id="section-collections">
+        <div class="card-header flex justify-between items-center" style="background: #F8FAFC; border-bottom: 1px solid var(--color-border); padding: 1.25rem;">
+          <div>
+            <div class="flex items-center gap-2">
+              <span style="font-size: 1.25rem;">📥</span>
+              <h3 class="card-title" style="margin-bottom: 0;">Tenant Rent Collections &amp; Inflow Ledger</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem; margin-bottom: 0;">
+              Real-time record of all rental payments collected from tenants, detailing which flat was rented, billing period, and payment gateway channel.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <input type="text" id="search-collections" class="form-control" placeholder="🔍 Search tenant, flat or ID..." style="max-width: 250px; font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Collection / Trx ID</th>
+                <th>Tenant Details</th>
+                <th>Rented Flat &amp; Location</th>
+                <th>Type &amp; Period</th>
+                <th>Collected Amount</th>
+                <th>Payment Channel</th>
+                <th>Date &amp; Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-collections-table-body">
+              <!-- Dynamically populated by AdminController.loadTenantCollections() -->
+              <tr>
+                <td colspan="8" class="text-center text-muted" style="padding: 2rem;">Loading tenant collections...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- SECTION 2: TENANT OUTSTANDING DUES & NOTICE RECOVERY DESK -->
+      <!-- ============================================================= -->
+      <div class="card mb-8" id="section-dues" style="border: 2px solid #FECACA;">
+        <div class="card-header flex justify-between items-center" style="background: #FFF1F2; border-bottom: 1px solid #FECDD3; padding: 1.25rem;">
+          <div>
+            <div class="flex items-center gap-2">
+              <span style="font-size: 1.25rem;">⚠️</span>
+              <h3 class="card-title" style="margin-bottom: 0; color: #991B1B;">Tenant Outstanding Dues &amp; Recovery Notice Desk</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem; margin-bottom: 0; color: #7F1D1D;">
+              Tenants with overdue monthly rents or utility charges. Click <strong>"Send Notice"</strong> to dispatch official recovery notices via SMS, Email, and Tenant Portal.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <label for="filter-dues-status" style="font-size: 0.82rem; font-weight: 700; color: #991B1B; margin-bottom: 0;">Status Filter:</label>
+            <select id="filter-dues-status" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.75rem; width: auto;">
+              <option value="ALL">All Dues</option>
+              <option value="OVERDUE" selected>Overdue Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr style="background: #FFF5F5;">
+                <th>Due ID</th>
+                <th>Tenant Details</th>
+                <th>Rented Flat &amp; Address</th>
+                <th>Billing Item &amp; Month</th>
+                <th>Total Billed</th>
+                <th>Outstanding Due</th>
+                <th>Due Date &amp; Overdue</th>
+                <th>Notice Status</th>
+                <th>Notice Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-dues-table-body">
+              <!-- Dynamically populated by AdminController.loadTenantDues() -->
+              <tr>
+                <td colspan="9" class="text-center text-muted" style="padding: 2rem;">Loading outstanding tenant dues...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- SECTION 3: OWNER SETTLEMENTS & WITHDRAWAL REQUESTS PIPELINE -->
+      <!-- ============================================================= -->
+      <div class="card mb-8" id="section-settlements">
+        <div class="card-header flex justify-between items-center" style="background: #F8FAFC; border-bottom: 1px solid var(--color-border); padding: 1.25rem;">
+          <div>
+            <div class="flex items-center gap-2">
+              <span style="font-size: 1.25rem;">🏦</span>
+              <h3 class="card-title" style="margin-bottom: 0;">Owner Settlements &amp; Withdrawal Requests Pipeline</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem; margin-bottom: 0;">
+              Review and disburse funds requested by property owners for verified flats rented or purchased through TANSU Niraloy.
+            </p>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="alert('Initiating automated Bangladesh Electronic Fund Transfer Network (BEFTN) batch run for all pending settlements...');">
+            Disburse Approved Settlements
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Reference ID</th>
+                <th>Property Owner</th>
+                <th>Property &amp; Source</th>
+                <th>Request Type</th>
+                <th>Entitled / Requested</th>
+                <th>Disbursed</th>
+                <th>Payout Destination</th>
+                <th>Status</th>
+                <th>Submission / Clearance</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-settlements-table-body">
+              <!-- Populated by AdminController.loadOwnerSettlements() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- SECTION 4: SYSTEM OPERATING EXPENSES -->
+      <!-- ============================================================= -->
+      <div class="card mb-8" id="section-expenses">
+        <div class="card-header flex justify-between items-center" style="background: #F8FAFC; border-bottom: 1px solid var(--color-border); padding: 1.25rem;">
+          <div>
+            <div class="flex items-center gap-2">
+              <span style="font-size: 1.25rem;">📉</span>
+              <h3 class="card-title" style="margin-bottom: 0;">System Operating Expenses</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem; margin-bottom: 0;">
+              Institutional expenses for physical property field inspections, certified surveyor escorts, and server infrastructure.
+            </p>
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="
+            const desc = prompt('Enter expense description:');
+            const amt = prompt('Enter expense amount (৳):');
+            if (desc && amt) {
+              apiPost('/api/admin/expenses', { category: 'OPERATIONS', description: desc, amount: Number(amt) })
+                .then(() => {
+                  AdminController.loadOperatingExpenses();
+                  AdminController.loadFinanceMetrics();
+                  Components.showToast('success', 'Expense Recorded', 'Operating expense logged in audit ledger.');
+                });
+            }
+          ">
+            + Record Operating Expense
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Expense ID</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Voucher</th>
+              </tr>
+            </thead>
+            <tbody id="admin-expenses-table-body">
+              <!-- Populated by AdminController.loadOperatingExpenses() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: SEND DUE RECOVERY NOTICE -->
+  <!-- ============================================================= -->
+  <div id="modal-send-notice" class="modal-backdrop">
+    <div class="modal-dialog" style="max-width: 620px;">
+      <div class="modal-header" style="background: #FFF1F2; border-bottom: 1px solid #FECDD3;">
+        <div class="flex items-center gap-2">
+          <span style="font-size: 1.4rem;">📢</span>
+          <h3 class="modal-title" style="color: #991B1B;">Send Official Due Recovery Notice</h3>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="Components.closeModal('modal-send-notice')">&times;</button>
+      </div>
+
+      <form onsubmit="AdminController.submitDueNotice(event)">
+        <div class="modal-body" style="padding: 1.5rem;">
+          <input type="hidden" id="notice-due-id">
+
+          <!-- Tenant & Flat Summary Card -->
+          <div style="background: #F8FAFC; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.25rem; font-size: 0.88rem;">
+            <div class="grid grid-cols-2 gap-2 mb-2">
+              <div>
+                <span class="text-muted" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700;">Recipient Tenant:</span>
+                <div id="notice-tenant-display" style="font-weight: 700; color: var(--color-primary);">Loading...</div>
+                <div class="text-muted" style="font-size: 0.8rem;">
+                  📞 <span id="notice-phone-display">017XXXXXXXX</span> &bull; ✉️ <span id="notice-email-display">user@example.com</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-muted" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700;">Outstanding Due:</span>
+                <div id="notice-amount-display" style="font-size: 1.3rem; font-weight: 800; color: var(--color-danger);">৳ 0</div>
+                <div id="notice-days-display" style="color: var(--color-danger); font-weight: 700; font-size: 0.8rem;">Overdue</div>
+              </div>
+            </div>
+            <div style="border-top: 1px solid var(--color-border); padding-top: 0.5rem; color: var(--color-text-muted); font-size: 0.82rem;">
+              🏢 <strong>Rented Flat:</strong> <span id="notice-flat-display">PROP-...</span>
+            </div>
+          </div>
+
+          <!-- Notice Severity Level -->
+          <div class="form-group mb-3">
+            <label for="notice-type-select" class="form-label" style="font-weight: 700;">Notice Severity Level</label>
+            <select id="notice-type-select" class="form-select" onchange="AdminController.updateNoticeTemplateText()">
+              <option value="1ST_REMINDER">🔔 Friendly 1st Due Reminder</option>
+              <option value="URGENT_WARNING">⚠️ Urgent 2nd Demand Notice</option>
+              <option value="FINAL_LEGAL">🛑 Final Contract Termination &amp; Legal Notice</option>
+            </select>
+          </div>
+
+          <!-- Dispatch Channels -->
+          <div class="form-group mb-3">
+            <label class="form-label" style="font-weight: 700; margin-bottom: 0.35rem;">Notification Channels</label>
+            <div class="flex gap-4" style="font-size: 0.85rem;">
+              <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+                <input type="checkbox" id="chan-sms" checked style="accent-color: var(--color-primary);"> 📲 Instant SMS Gateway
+              </label>
+              <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+                <input type="checkbox" id="chan-portal" checked style="accent-color: var(--color-primary);"> 💻 Tenant Portal Banner
+              </label>
+              <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+                <input type="checkbox" id="chan-email" checked style="accent-color: var(--color-primary);"> ✉️ Official Email
+              </label>
+            </div>
+          </div>
+
+          <!-- Notice Content Textarea -->
+          <div class="form-group mb-1">
+            <label for="notice-message-text" class="form-label" style="font-weight: 700;">Official Notice Text</label>
+            <textarea id="notice-message-text" class="form-control" rows="6" style="font-size: 0.85rem; font-family: monospace; line-height: 1.5;" required></textarea>
+            <small class="text-muted" style="display: block; margin-top: 0.25rem;">
+              You may customize the message text before sending. The notice will be recorded in the system audit trail.
+            </small>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="background: #F8FAFC;">
+          <button type="button" class="btn btn-outline" onclick="Components.closeModal('modal-send-notice')">Cancel</button>
+          <button type="submit" class="btn btn-danger" style="font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;">
+            <span>📢 Dispatch Official Notice</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: OFFICIAL RECEIPT POPUP -->
+  <!-- ============================================================= -->
+  <div id="modal-receipt-view" class="modal-backdrop">
+    <div class="modal-dialog" style="max-width: 520px;">
+      <div class="modal-header">
+        <div class="flex items-center gap-2">
+          <span style="font-size: 1.3rem;">📄</span>
+          <h3 class="modal-title">Official Intermediary Payment Receipt</h3>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="Components.closeModal('modal-receipt-view')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="receipt-box mb-4">
+          <div class="text-center mb-4" style="border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
+            <img src="assets/logo.svg" alt="TANSU Logo" style="height: 36px; margin: 0 auto 0.5rem auto; display: block;">
+            <div style="font-weight: 800; font-size: 1.15rem; color: var(--color-primary);">TANSU NIRALOY</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-muted);">Central Intermediary Escrow Clearing Authority</div>
+            <div style="margin-top: 0.5rem;"><span class="badge badge-verified">✓ PAYMENT CLEARED &amp; VERIFIED</span></div>
+          </div>
+
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Collection ID:</span>
+            <strong id="receipt-id">COL-101</strong>
+          </div>
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Transaction ID:</span>
+            <code id="receipt-trx">TXN-88219</code>
+          </div>
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Billed Tenant:</span>
+            <strong id="receipt-tenant">Tenant Name</strong>
+          </div>
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Rented Property:</span>
+            <span id="receipt-property">PROP-102</span>
+          </div>
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Location:</span>
+            <span id="receipt-location">Dhanmondi, Dhaka</span>
+          </div>
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Billing Month:</span>
+            <span id="receipt-month">September 2026</span>
+          </div>
+          <div class="flex justify-between py-1 mb-1">
+            <span class="text-muted">Payment Channel:</span>
+            <span id="receipt-method">bKash</span>
+          </div>
+          <div class="flex justify-between py-1 mb-2">
+            <span class="text-muted">Payment Timestamp:</span>
+            <span id="receipt-date">2026-08-25</span>
+          </div>
+          <div class="flex justify-between py-2" style="border-top: 2px solid var(--color-primary); font-size: 1.25rem; font-weight: 800; color: var(--color-primary);">
+            <span>Total Cleared:</span>
+            <span id="receipt-amount" style="color: var(--color-success);">৳ 0</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print Receipt</button>
+        <button type="button" class="btn btn-primary" onclick="Components.closeModal('modal-receipt-view')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      AdminController.initFinanceHub();
+    });
+  </script>
+</body>
+</html>

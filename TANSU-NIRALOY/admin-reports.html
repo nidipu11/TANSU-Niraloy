@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrative Reports &amp; Analytics | TANSU Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="admin-reports">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Analytics &amp; Compliance Audit</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">Platform Reports &amp; Vetting Metrics</h1>
+          <p class="text-muted">Monthly performance statistics, occupancy ratios across Dhaka zones, and legal compliance rates.</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-outline" onclick="window.print()">🖨️ Print Report</button>
+          <a href="admin-dashboard.html" class="btn btn-outline">&larr; Dashboard</a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="card text-center">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--color-primary);">98.4%</div>
+          <div class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">Physical Verification Pass Rate</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--color-success);">0</div>
+          <div class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">Direct Tenant-Owner Disputes</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--color-accent);">100%</div>
+          <div class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">Escrow / Clearing Settlement Compliance</div>
+        </div>
+      </div>
+
+      <div class="card mb-6">
+        <h3 class="card-title mb-4">Dhaka Metropolitan Area Occupancy Breakdown</h3>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Zone / Sector</th>
+                <th>Total Verified Listings</th>
+                <th>Occupied (Rented)</th>
+                <th>Available for Rent</th>
+                <th>Average Monthly Rent</th>
+                <th>Demand Index</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Gulshan-1 &amp; 2</strong></td>
+                <td>14</td>
+                <td>12</td>
+                <td>2</td>
+                <td>৳ 82,500</td>
+                <td><span class="badge badge-verified">HIGH</span></td>
+              </tr>
+              <tr>
+                <td><strong>Banani</strong></td>
+                <td>9</td>
+                <td>8</td>
+                <td>1</td>
+                <td>৳ 65,000</td>
+                <td><span class="badge badge-verified">HIGH</span></td>
+              </tr>
+              <tr>
+                <td><strong>Dhanmondi</strong></td>
+                <td>18</td>
+                <td>16</td>
+                <td>2</td>
+                <td>৳ 46,000</td>
+                <td><span class="badge badge-verified">VERY HIGH</span></td>
+              </tr>
+              <tr>
+                <td><strong>Uttara Sectors</strong></td>
+                <td>22</td>
+                <td>19</td>
+                <td>3</td>
+                <td>৳ 38,000</td>
+                <td><span class="badge badge-verified">STABLE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Bashundhara R/A</strong></td>
+                <td>26</td>
+                <td>21</td>
+                <td>5</td>
+                <td>৳ 35,000</td>
+                <td><span class="badge badge-verified">HIGH</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

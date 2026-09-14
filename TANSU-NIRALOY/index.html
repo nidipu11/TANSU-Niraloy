@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TANSU Niraloy — Property Rental &amp; Sale Management</title>
+  <meta name="description" content="Find peaceful, legally verified rental apartments and flats for sale in Dhaka, Bangladesh. Intermediary guaranteed, zero landlord-tenant dispute platform.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* Dark Navy + Architectural Building Visibility */
+    .hero-tranquil {
+      background: linear-gradient(135deg, rgba(15, 30, 54, 0.76) 0%, rgba(15, 30, 54, 0.85) 100%), 
+                  url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      padding: 5.5rem 0 4rem 0;
+      color: #FFFFFF;
+      position: relative;
+    }
+
+    /* Area Showcase in 2 ROWS with Real Images */
+    .area-showcase-section {
+      background: var(--color-surface);
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .area-grid-two-rows {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+    }
+
+    .area-image-card {
+      position: relative;
+      height: 140px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid var(--color-border);
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .area-image-card img.area-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+      z-index: 1;
+    }
+
+    .area-image-card .area-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(8, 20, 38, 0.25) 0%, rgba(8, 20, 38, 0.9) 100%);
+      z-index: 2;
+      transition: background var(--transition-fast);
+    }
+
+    .area-image-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-accent);
+      box-shadow: 0 12px 28px rgba(229, 184, 66, 0.25);
+    }
+
+    .area-image-card:hover img.area-bg-img {
+      transform: scale(1.08);
+    }
+
+    .area-image-card.active {
+      border-color: var(--color-accent);
+      border-width: 2px;
+      box-shadow: 0 0 0 3px rgba(229, 184, 66, 0.3);
+    }
+
+    .area-image-card.active .area-overlay {
+      background: linear-gradient(180deg, rgba(8, 20, 38, 0.15) 0%, rgba(8, 20, 38, 0.95) 100%);
+    }
+
+    .area-card-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .area-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 0.15rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      line-height: 1.1;
+    }
+
+    .area-card-tagline {
+      font-size: 0.72rem;
+      color: #CBD5E1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .area-card-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      background: var(--color-accent);
+      color: #081426;
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Living Requirement Compact Cards */
+    .requirement-card-compact {
+      position: relative;
+      height: 155px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .requirement-card-compact:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-accent);
+    }
+
+    .requirement-card-compact img.bg-photo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+      z-index: 1;
+    }
+
+    .requirement-card-compact:hover img.bg-photo {
+      transform: scale(1.08);
+    }
+
+    .requirement-card-compact .overlay-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(8, 20, 38, 0.15) 0%, rgba(8, 20, 38, 0.9) 100%);
+      z-index: 2;
+    }
+
+    .requirement-card-compact .card-text-content {
+      position: relative;
+      z-index: 3;
+      color: #FFFFFF;
+    }
+
+    .requirement-card-compact h4 {
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      font-weight: 700;
+    }
+
+    .requirement-card-compact p {
+      font-size: 0.78rem;
+      color: #E2E8F0;
+      margin-bottom: 0;
+      line-height: 1.3;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 1024px) {
+      .area-grid-two-rows {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .area-grid-two-rows {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-page="home">
+
+  <div id="site-header-container"></div>
+
+  <!-- Hero Section -->
+  <section class="hero-tranquil">
+    <div class="container">
+      <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+        
+        <!-- High Contrast Header Contact Tag -->
+        <div style="display: inline-flex; align-items: center; gap: 0.75rem; background: rgba(15, 30, 54, 0.75); padding: 0.4rem 1.25rem; border-radius: var(--radius-full); border: 1px solid rgba(200, 157, 60, 0.4); margin-bottom: 1.25rem; font-size: 0.85rem;">
+          <span style="color: var(--color-accent-light); font-weight: 700;">🛡️ Centralized Intermediary</span>
+          <span style="color: rgba(255,255,255,0.4);">|</span>
+          <a href="mailto:desk@tansu-niraloy.com.bd" style="color: #38BDF8; font-weight: 700; text-decoration: none;">
+            ✉️ desk@tansu-niraloy.com.bd
+          </a>
+        </div>
+
+        <h1 style="color: #FFFFFF; font-size: 2.9rem; margin-bottom: 1rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em;">
+          Find Your Peaceful Home in Dhaka
+        </h1>
+        <p class="lead" style="color: #E2E8F0; margin-bottom: 2.25rem; font-size: 1.15rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+          Dispute-free property rental and sale. All listings are legally checked, physically inspected, and mediated centrally through TANSU Niraloy.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="card" style="padding: 1.25rem 1.5rem; background: #FFFFFF; border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); text-align: left;">
+          <form action="properties.html" method="GET" class="grid grid-cols-4 gap-3">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="search-location" class="form-label" style="font-size: 0.78rem; text-transform: uppercase; color: var(--color-text-muted);">Area / Zone</label>
+              <select id="search-location" name="location" class="form-select" style="font-weight: 600;">
+                <option value="ALL">All Dhaka Areas</option>
+                <option value="Gulshan">Gulshan</option>
+                <option value="Banani">Banani</option>
+                <option value="Dhanmondi">Dhanmondi</option>
+                <option value="Uttara">Uttara</option>
+                <option value="Mirpur">Mirpur</option>
+                <option value="Bashundhara">Bashundhara</option>
+                <option value="Mohammadpur">Mohammadpur</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="search-purpose" class="form-label" style="font-size: 0.78rem; text-transform: uppercase; color: var(--color-text-muted);">Living Purpose</label>
+              <select id="search-purpose" name="purpose" class="form-select">
+                <option value="ALL">Rent &amp; Sale</option>
+                <option value="RENT">Rent</option>
+                <option value="SALE">Sale</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="search-type" class="form-label" style="font-size: 0.78rem; text-transform: uppercase; color: var(--color-text-muted);">Property Category</label>
+              <select id="search-type" name="type" class="form-select">
+                <option value="ALL">All Categories</option>
+                <option value="FAMILY_HOUSE">Family House</option>
+                <option value="BACHELOR_HOUSE">Bachelor House</option>
+                <option value="FLAT_SALE">Flat Sale</option>
+                <option value="PREMIUM_FAMILY_HOUSING">Premium Housing</option>
+              </select>
+            </div>
+
+            <div style="display: flex; align-items: flex-end;">
+              <button type="submit" class="btn btn-primary btn-block" style="height: 44px; font-weight: 700;">
+                🔍 Search Homes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DHAKA AREAS SHOWCASE IN 2 ROWS (Real Area Photos with 5 Demo Houses Each) -->
+  <section class="area-showcase-section">
+    <div class="container">
+      <div class="flex justify-between items-center mb-1">
+        <div>
+          <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--color-accent-dark);">
+            Dhaka Metropolitan Neighborhoods
+          </span>
+          <h2 style="font-size: 1.6rem; color: var(--color-primary); margin-top: 0.2rem; margin-bottom: 0;">
+            Select an Area to View Verified Homes (5 in Each Area)
+          </h2>
+        </div>
+        <a href="properties.html?location=ALL" id="btn-show-all-areas" class="btn btn-sm btn-outline" style="font-size: 0.82rem; text-decoration: none;">
+          View All Dhaka Homes (35)
+        </a>
+      </div>
+      <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 0;">
+        Click any area card below to explore and view all verified homes inside that neighborhood.
+      </p>
+
+      <!-- 2 ROWS OF 4 CARDS (TOTAL 8 CARDS) -->
+      <div class="area-grid-two-rows">
+        
+        <!-- ROW 1, CARD 1: All Zones -->
+        <a href="properties.html?location=ALL" class="area-image-card active" data-area="ALL">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="All Dhaka Zones" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">All Zones</div>
+              <div class="area-card-tagline">Dhaka City Wide</div>
+            </div>
+            <span class="area-card-badge">35 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 1, CARD 2: Gulshan -->
+        <a href="properties.html?location=Gulshan" class="area-image-card" data-area="Gulshan">
+          <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=600&q=80" alt="Gulshan Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Gulshan</div>
+              <div class="area-card-tagline">Diplomatic Zone &bull; Lakeview</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 1, CARD 3: Banani -->
+        <a href="properties.html?location=Banani" class="area-image-card" data-area="Banani">
+          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" alt="Banani Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Banani</div>
+              <div class="area-card-tagline">Road 11 &bull; Urban Lifestyle</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 1, CARD 4: Dhanmondi -->
+        <a href="properties.html?location=Dhanmondi" class="area-image-card" data-area="Dhanmondi">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Dhanmondi Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Dhanmondi</div>
+              <div class="area-card-tagline">Lakeside &bull; Green Parks</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 2, CARD 5: Uttara -->
+        <a href="properties.html?location=Uttara" class="area-image-card" data-area="Uttara">
+          <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=600&q=80" alt="Uttara Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Uttara</div>
+              <div class="area-card-tagline">Planned Sectors &bull; Metro</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 2, CARD 6: Mirpur -->
+        <a href="properties.html?location=Mirpur" class="area-image-card" data-area="Mirpur">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80" alt="Mirpur Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Mirpur</div>
+              <div class="area-card-tagline">Metro Rail &bull; DOHS Zone</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 2, CARD 7: Bashundhara -->
+        <a href="properties.html?location=Bashundhara" class="area-image-card" data-area="Bashundhara">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" alt="Bashundhara R/A Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Bashundhara</div>
+              <div class="area-card-tagline">Gated R/A &bull; Universities</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+        <!-- ROW 2, CARD 8: Mohammadpur -->
+        <a href="properties.html?location=Mohammadpur" class="area-image-card" data-area="Mohammadpur">
+          <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80" alt="Mohammadpur Dhaka" class="area-bg-img">
+          <div class="area-overlay"></div>
+          <div class="area-card-content">
+            <div>
+              <div class="area-card-title">Mohammadpur</div>
+              <div class="area-card-tagline">Lalmatia &bull; Japan Garden</div>
+            </div>
+            <span class="area-card-badge">5 Homes</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Compact "Explore by Living Requirement" (Real Family, Real University Student Group, Real Architecture) -->
+  <section class="section" style="padding: 3rem 0; background-color: var(--color-surface-soft);">
+    <div class="container">
+      <div class="flex justify-between items-center mb-5">
+        <div>
+          <span class="section-subtitle">Curated Categories</span>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0; color: var(--color-primary);">Explore by Living Requirement</h3>
+        </div>
+        <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 0;">Verified living options tailored for your lifestyle</p>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4">
+        
+        <!-- 1. Family House with REAL FAMILY PHOTO (Parents and children together) -->
+        <a href="family-house.html" class="requirement-card-compact">
+          <img src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?auto=format&fit=crop&w=800&q=80" alt="Real Happy Family at Home" class="bg-photo">
+          <div class="overlay-gradient"></div>
+          <div class="card-text-content">
+            <h4>Family Houses</h4>
+            <p>Spacious, peaceful residential homes with schools and parks nearby.</p>
+          </div>
+        </a>
+
+        <!-- 2. Bachelor Unit with REAL UNIVERSITY STUDENTS GROUP (Boys & Girls with books and laptops) -->
+        <a href="bachelor-house.html" class="requirement-card-compact">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="University Students Group Studying with Books and Laptops" class="bg-photo">
+          <div class="overlay-gradient"></div>
+          <div class="card-text-content">
+            <h4>Bachelor Units</h4>
+            <p>Verified flats for university students &amp; executives with high-speed WiFi.</p>
+          </div>
+        </a>
+
+        <!-- 3. Flats for Sale with Real Modern Apartment Architecture -->
+        <a href="flat-sale.html" class="requirement-card-compact">
+          <img src="https://images.unsplash.com/photo-1515263487990-61b07816b324?auto=format&fit=crop&w=800&q=80" alt="Modern Apartment Building" class="bg-photo">
+          <div class="overlay-gradient"></div>
+          <div class="card-text-content">
+            <h4>Flats for Sale</h4>
+            <p>RAJUK vetted apartments with guaranteed title registration support.</p>
+          </div>
+        </a>
+
+        <!-- 4. Premium Housing with Real Luxury Penthouse Photo -->
+        <a href="premium-family.html" class="requirement-card-compact">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Luxury Penthouse Residence" class="bg-photo">
+          <div class="overlay-gradient"></div>
+          <div class="card-text-content">
+            <h4>Premium Housing</h4>
+            <p>Exclusive duplexes &amp; penthouses in Gulshan, Banani &amp; Baridhara.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verified Properties Showcase Section -->
+  <section class="section" style="background-color: var(--color-bg); padding: 3.5rem 0;">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Verified Inventory</span>
+          <h2 class="section-title" id="showcase-title" style="margin-bottom: 0.2rem;">Available Properties Across Dhaka</h2>
+          <p class="text-muted" id="showcase-subtitle" style="font-size: 0.88rem; margin-bottom: 0;">Displaying verified listings (5 in each major residential area)</p>
+        </div>
+        <a href="properties.html" class="btn btn-outline">Browse Full Catalog &rarr;</a>
+      </div>
+
+      <div id="featured-properties-grid" class="grid grid-cols-3 gap-6">
+        <!-- Dynamically rendered properties from js/api.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Intermediary Assurance & Prominent Contact Support Section -->
+  <section style="background: linear-gradient(135deg, #081426 0%, #0F233F 100%); color: #FFFFFF; padding: 4rem 0; border-top: 1px solid rgba(229, 184, 66, 0.2);">
+    <div class="container">
+      <div class="grid grid-cols-2 gap-8 items-center">
+        <div>
+          <span style="color: var(--color-accent); text-transform: uppercase; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em;">
+            Trust &amp; Transparency Guarantee
+          </span>
+          <h2 style="color: #FFFFFF; font-size: 2.1rem; margin-top: 0.4rem; margin-bottom: 1rem;">
+            Why TANSU Niraloy is Dhaka's Safest Property Platform
+          </h2>
+          <p style="color: #CBD5E1; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            Direct landlord-tenant transactions often lead to disputed advance money, unverified physical conditions, and sudden rent hikes. With TANSU Niraloy:
+          </p>
+          <ul style="color: #E2E8F0; font-size: 0.9rem; line-height: 2; margin-bottom: 1.75rem;">
+            <li>✓ Every property undergoes physical inspection and RAJUK sanction validation</li>
+            <li>✓ Official escorted visits with certified field officers</li>
+            <li>✓ Bank-cleared rental payments with automated verified receipts</li>
+            <li>✓ Zero direct communication or awkward negotiations</li>
+          </ul>
+
+          <!-- High Contrast Email & Help Desk Badge -->
+          <div style="background: rgba(255, 255, 255, 0.08); padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1px solid rgba(56, 189, 248, 0.4); display: inline-flex; align-items: center; gap: 1rem;">
+            <div style="font-size: 1.75rem;">✉️</div>
+            <div>
+              <div style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; font-weight: 700;">Direct Intermediary Desk Email</div>
+              <a href="mailto:desk@tansu-niraloy.com.bd" style="color: var(--color-email-highlight); font-weight: 800; font-size: 1.05rem; text-decoration: underline;">
+                desk@tansu-niraloy.com.bd
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); padding: 2.25rem; border-radius: var(--radius-xl); border: 1px solid rgba(229, 184, 66, 0.25); box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+          <h3 style="color: #FFFFFF; margin-bottom: 0.75rem; font-size: 1.35rem;">Are you a Property Owner in Dhaka?</h3>
+          <p style="color: #94A3B8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            List your apartment on TANSU Niraloy. We vet tenants, handle property visits, collect rent on time, and disburse settlements directly into your bank account.
+          </p>
+          <a href="signup.html?role=OWNER" class="btn btn-accent btn-lg btn-block" style="font-weight: 800; font-size: 1rem;">
+            List Your Property (Owner Sign Up)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("featured-properties-grid");
+      const titleEl = document.getElementById("showcase-title");
+      const subtitleEl = document.getElementById("showcase-subtitle");
+      const areaCards = document.querySelectorAll(".area-image-card");
+      const showAllBtn = document.getElementById("btn-show-all-areas");
+
+      async function loadProperties(area = "ALL") {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
+            <p class="text-muted">Loading verified homes...</p>
+          </div>
+        `;
+
+        const res = await apiGet("/api/properties", { location: area });
+        const list = res.data || [];
+
+        areaCards.forEach(c => {
+          if (c.getAttribute("data-area") === area) c.classList.add("active");
+          else c.classList.remove("active");
+        });
+
+        if (area === "ALL") {
+          titleEl.textContent = "Available Properties Across Dhaka";
+          subtitleEl.textContent = `Displaying ${list.length} verified listings (5 in each major residential area)`;
+        } else {
+          titleEl.textContent = `Verified Properties in ${area}`;
+          subtitleEl.textContent = `Showing all 5 demo properties available in ${area}, Dhaka`;
+        }
+
+        if (list.length === 0) {
+          container.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><p>No properties found in ${area}.</p></div>`;
+          return;
+        }
+
+        container.innerHTML = list.map(p => Components.renderPropertyCard(p)).join("");
+      }
+
+      areaCards.forEach(card => {
+        card.addEventListener("click", () => {
+          const area = card.getAttribute("data-area");
+          loadProperties(area);
+        });
+      });
+
+      if (showAllBtn) {
+        showAllBtn.addEventListener("click", () => loadProperties("ALL"));
+      }
+
+      await loadProperties("ALL");
+    });
+  </script>
+</body>
+</html>

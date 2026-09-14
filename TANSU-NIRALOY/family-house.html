@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Houses for Rent in Dhaka | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="family">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="card mb-6" style="padding: 0; overflow: hidden; border-radius: var(--radius-xl); background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); color: #FFFFFF; display: grid; grid-template-columns: 1fr 340px;">
+        <div style="padding: 2.5rem;">
+          <span class="section-subtitle" style="color: var(--color-accent);">Family Housing Collection</span>
+          <h1 style="font-size: 2.3rem; margin-bottom: 0.5rem; color: #FFFFFF;">Peaceful Family Homes in Dhaka</h1>
+          <p style="color: #CBD5E1; font-size: 1rem; line-height: 1.6; margin-bottom: 0;">
+            Verified residential apartments with dedicated security, lift, standby generator, and proximity to Dhaka's reputed schools.
+          </p>
+        </div>
+        <div style="height: 100%; min-height: 180px;">
+          <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80" alt="Happy Family Relaxing at Home" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      </div>
+
+      <!-- Multi-Criteria Filter Bar -->
+      <div class="card mb-8" style="padding: 1.25rem; background-color: var(--color-surface); border-radius: var(--radius-lg);">
+        <div class="grid grid-cols-4 gap-4 mb-4">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-location" class="form-label" style="font-size: 0.8rem;">Location</label>
+            <select id="filter-location" class="form-select">
+              <option value="ALL">All Dhaka Areas</option>
+              <option value="Dhanmondi">Dhanmondi</option>
+              <option value="Mirpur">Mirpur</option>
+              <option value="Uttara">Uttara</option>
+              <option value="Mohammadpur">Mohammadpur</option>
+            </select>
+          </div>
+          <input type="hidden" id="filter-type" value="FAMILY_HOUSE">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-purpose" class="form-label" style="font-size: 0.8rem;">Purpose</label>
+            <select id="filter-purpose" class="form-select">
+              <option value="RENT">Rent Only</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-bedrooms" class="form-label" style="font-size: 0.8rem;">Bedrooms</label>
+            <select id="filter-bedrooms" class="form-select">
+              <option value="ALL">Any Bedrooms</option>
+              <option value="2">2+ Bedrooms</option>
+              <option value="3">3+ Bedrooms</option>
+              <option value="4">4+ Bedrooms</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0; display:flex; align-items:flex-end;">
+            <button class="btn btn-outline btn-block" id="btn-clear-filters">Reset Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="properties-grid" class="grid grid-cols-3 gap-6"></div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      PropertiesController.initCatalog("FAMILY_HOUSE");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tansu_logo_bg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F1E36"/>
+      <stop offset="100%" stop-color="#1E3A5F"/>
+    </linearGradient>
+    <linearGradient id="gold_accent_grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F3D079"/>
+      <stop offset="100%" stop-color="#C89D3C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Badge with Golden Border -->
+  <rect width="44" height="44" rx="11" fill="url(#tansu_logo_bg)"/>
+  <rect x="0.75" y="0.75" width="42.5" height="42.5" rx="10.25" stroke="url(#gold_accent_grad)" stroke-width="1.5"/>
+
+  <!-- Architectural Buildings & Residential House Silhouette -->
+  <!-- Left Building Block -->
+  <rect x="9" y="16" width="7.5" height="19" rx="1" fill="#E2E8F0" fill-opacity="0.9"/>
+  <!-- Left Building Windows -->
+  <rect x="11" y="18.5" width="1.5" height="2" rx="0.3" fill="#0F1E36"/>
+  <rect x="13.5" y="18.5" width="1.5" height="2" rx="0.3" fill="#0F1E36"/>
+  <rect x="11" y="22.5" width="1.5" height="2" rx="0.3" fill="#0F1E36"/>
+  <rect x="13.5" y="22.5" width="1.5" height="2" rx="0.3" fill="#0F1E36"/>
+  <rect x="11" y="26.5" width="1.5" height="2" rx="0.3" fill="#0F1E36"/>
+  <rect x="13.5" y="26.5" width="1.5" height="2" rx="0.3" fill="#0F1E36"/>
+
+  <!-- Center High-Rise Tower -->
+  <rect x="18" y="10" width="8.5" height="25" rx="1" fill="#FFFFFF"/>
+  <!-- Spire Antenna on Center Skyscraper -->
+  <line x1="22.25" y1="6" x2="22.25" y2="10" stroke="url(#gold_accent_grad)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Center Tower Golden Lit Windows -->
+  <rect x="20" y="13" width="1.8" height="2.2" rx="0.4" fill="#C89D3C"/>
+  <rect x="22.8" y="13" width="1.8" height="2.2" rx="0.4" fill="#C89D3C"/>
+  <rect x="20" y="17" width="1.8" height="2.2" rx="0.4" fill="#C89D3C"/>
+  <rect x="22.8" y="17" width="1.8" height="2.2" rx="0.4" fill="#C89D3C"/>
+  <rect x="20" y="21" width="1.8" height="2.2" rx="0.4" fill="#C89D3C"/>
+  <rect x="22.8" y="21" width="1.8" height="2.2" rx="0.4" fill="#C89D3C"/>
+  <rect x="20" y="25" width="1.8" height="2.2" rx="0.4" fill="#0F1E36"/>
+  <rect x="22.8" y="25" width="1.8" height="2.2" rx="0.4" fill="#0F1E36"/>
+
+  <!-- Right Residential House with Pitched Gable Roof -->
+  <path d="M26.5 21L31.5 16L36.5 21V35H26.5V21Z" fill="#F1F5F9"/>
+  <!-- Golden Roof Trim -->
+  <path d="M26 21.5L31.5 16L37 21.5" stroke="url(#gold_accent_grad)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- House Attic Window -->
+  <circle cx="31.5" cy="20.5" r="1.3" fill="#C89D3C"/>
+  <!-- House Lower Windows -->
+  <rect x="29" y="24" width="2" height="2.5" rx="0.4" fill="#0F1E36"/>
+  <rect x="32.5" y="24" width="2" height="2.5" rx="0.4" fill="#0F1E36"/>
+  <!-- House Door -->
+  <path d="M30 35V30H33V35" fill="#C89D3C"/>
+
+  <!-- Foundation Ground Baseline -->
+  <line x1="7" y1="35" x2="37" y2="35" stroke="url(#gold_accent_grad)" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

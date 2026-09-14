@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .role-selection-tabs {
+      display: flex;
+      background: var(--color-surface-alt);
+      padding: 0.35rem;
+      border-radius: var(--radius-lg);
+      gap: 0.35rem;
+      margin-bottom: 1.75rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .role-tab-btn {
+      flex: 1;
+      padding: 0.65rem 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      transition: all var(--transition-fast);
+    }
+
+    .role-tab-btn:hover {
+      color: var(--color-primary);
+    }
+
+    .role-tab-btn.active {
+      background: var(--color-surface);
+      color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .role-tab-btn.active .role-sublabel {
+      color: var(--color-accent-dark);
+    }
+
+    .role-sublabel {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--color-text-light);
+    }
+  </style>
+</head>
+<body data-page="signin">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content flex items-center justify-center" style="min-height: 80vh;">
+    <div class="container" style="max-width: 480px;">
+      <div class="card" style="padding: 2.25rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
+        <div class="text-center mb-5">
+          <img src="assets/logo.svg" alt="TANSU Niraloy" style="width: 52px; height: 52px; margin: 0 auto 0.75rem auto; display: block; border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Sign In to TANSU</h2>
+          <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 0;">Select your account type to proceed</p>
+        </div>
+
+        <!-- 3 Role Tabs at the Top -->
+        <div class="role-selection-tabs">
+          <button type="button" class="role-tab-btn active" data-role="TENANT">
+            <span>Tenant</span>
+            <span class="role-sublabel">Renter / Buyer</span>
+          </button>
+          <button type="button" class="role-tab-btn" data-role="OWNER">
+            <span>Owner</span>
+            <span class="role-sublabel">Landlord / Seller</span>
+          </button>
+          <button type="button" class="role-tab-btn" data-role="ADMIN">
+            <span>Admin</span>
+            <span class="role-sublabel">Central Desk</span>
+          </button>
+        </div>
+
+        <form id="signin-form" novalidate>
+          <input type="hidden" id="selected-role" value="TENANT">
+
+          <div id="signin-alert-box" style="display: none;"></div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">
+              <span id="label-email">Registered Email</span> <span class="required">*</span>
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="form-control"
+              placeholder="e.g. yourname@gmail.com"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-group">
+            <div class="flex justify-between items-center mb-1">
+              <label for="password" class="form-label" style="margin-bottom: 0;">Password <span class="required">*</span></label>
+              <a href="forgot-password.html" style="font-size: 0.78rem; color: var(--color-secondary);">Forgot Password?</a>
+            </div>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              class="form-control"
+              placeholder="Enter password"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <div class="form-group flex items-center justify-between mb-4">
+            <label class="flex items-center gap-2" style="font-size: 0.85rem; color: var(--color-text-muted); cursor: pointer; margin-bottom: 0;">
+              <input type="checkbox" id="rememberMe" style="accent-color: var(--color-primary); cursor: pointer;">
+              Remember session
+            </label>
+            <button type="button" id="btn-demo-fill" class="btn btn-sm btn-outline" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;">
+              ⚡ Auto-Fill Demo
+            </button>
+          </div>
+
+          <button type="submit" id="btn-signin-submit" class="btn btn-primary btn-block btn-lg mb-4">
+            Sign In as Tenant
+          </button>
+
+          <div class="text-center" style="font-size: 0.88rem; color: var(--color-text-muted);">
+            Don't have an account?
+            <a href="signup.html" id="link-signup-role" style="font-weight: 600; color: var(--color-accent-dark);">Register as Tenant</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("signin-form");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const submitBtn = document.getElementById("btn-signin-submit");
+      const roleTabs = document.querySelectorAll(".role-tab-btn");
+      const selectedRoleInput = document.getElementById("selected-role");
+      const demoFillBtn = document.getElementById("btn-demo-fill");
+      const signupLink = document.getElementById("link-signup-role");
+
+      // Check URL for preselected role (e.g. signin.html?role=ADMIN)
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialRole = urlParams.get("role") || "TENANT";
+
+      function setRole(role) {
+        selectedRoleInput.value = role;
+        roleTabs.forEach(tab => {
+          if (tab.getAttribute("data-role") === role) tab.classList.add("active");
+          else tab.classList.remove("active");
+        });
+
+        if (role === "TENANT") {
+          submitBtn.textContent = "Sign In as Tenant";
+          signupLink.textContent = "Register as Tenant";
+          signupLink.href = "signup.html?role=TENANT";
+          emailInput.placeholder = "e.g. tenant@gmail.com";
+        } else if (role === "OWNER") {
+          submitBtn.textContent = "Sign In as Property Owner";
+          signupLink.textContent = "Register as Owner";
+          signupLink.href = "signup.html?role=OWNER";
+          emailInput.placeholder = "e.g. owner@gmail.com";
+        } else if (role === "ADMIN") {
+          submitBtn.textContent = "Sign In as Central Admin";
+          signupLink.textContent = "Admin accounts are pre-assigned";
+          signupLink.href = "#";
+          emailInput.placeholder = "admin@tansu.gov.bd";
+        }
+      }
+
+      setRole(initialRole);
+
+      roleTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          setRole(tab.getAttribute("data-role"));
+        });
+      });
+
+      // Quick Demo Auto-Fill
+      demoFillBtn.addEventListener("click", () => {
+        const role = selectedRoleInput.value;
+        if (role === "TENANT") {
+          emailInput.value = "student.tenant@gmail.com";
+          passwordInput.value = "Tenant123";
+        } else if (role === "OWNER") {
+          emailInput.value = "property.owner@gmail.com";
+          passwordInput.value = "Owner123";
+        } else if (role === "ADMIN") {
+          emailInput.value = "admin@tansu.gov.bd";
+          passwordInput.value = "Admin123";
+        }
+      });
+
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        Validation.clearAllErrors(form);
+        const alertBox = document.getElementById("signin-alert-box");
+        if (alertBox) alertBox.style.display = "none";
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const targetRole = selectedRoleInput.value;
+
+        if (!email) {
+          Validation.showError(emailInput, "Email is required.");
+          return;
+        }
+        if (!password) {
+          Validation.showError(passwordInput, "Password is required.");
+          return;
+        }
+
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Authenticating...";
+
+        const res = await Auth.signIn(email, password);
+
+        if (!res.success) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+
+          if (alertBox) {
+            alertBox.style.display = "block";
+            const isNotFound = res.status === 404 || (res.message && res.message.toLowerCase().includes("no account"));
+            if (isNotFound) {
+              alertBox.innerHTML = `
+                <div class="card mb-4" style="background: #FEF2F2; border: 1px solid #FECDD3; padding: 1rem; border-radius: var(--radius-md);">
+                  <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 0.75rem;">
+                    <div>
+                      <div style="font-weight: 700; color: #991B1B; margin-bottom: 0.2rem;">Account Not Found</div>
+                      <div style="font-size: 0.85rem; color: #7F1D1D;">No account found with this email. Please sign up first.</div>
+                    </div>
+                    <a href="signup.html?role=${encodeURIComponent(targetRole)}&email=${encodeURIComponent(email)}" class="btn btn-sm btn-accent" style="white-space: nowrap;">
+                      Sign Up as ${targetRole === 'OWNER' ? 'Owner' : 'Tenant'} &rarr;
+                    </a>
+                  </div>
+                </div>
+              `;
+            } else {
+              alertBox.innerHTML = `
+                <div class="card mb-4" style="background: #FEF2F2; border: 1px solid #FECDD3; padding: 1rem; border-radius: var(--radius-md);">
+                  <div style="font-weight: 700; color: #991B1B; margin-bottom: 0.2rem;">Authentication Failed</div>
+                  <div style="font-size: 0.85rem; color: #7F1D1D;">${res.message || 'Invalid credentials. Please verify your email and password.'}</div>
+                </div>
+              `;
+            }
+          } else {
+            Validation.showError(emailInput, res.message || "Invalid credentials.");
+          }
+          return;
+        }
+
+        const user = res.user;
+        Components.showToast("success", "Sign In Successful", `Welcome to TANSU Niraloy, ${user.name}!`);
+
+        setTimeout(() => {
+          if (user.role === "ADMIN") window.location.href = "admin-dashboard.html";
+          else if (user.role === "OWNER") window.location.href = "owner-dashboard.html";
+          else window.location.href = "tenant-dashboard.html";
+        }, 600);
+      };
+    });
+  </script>
+</body>
+</html>
