@@ -1,0 +1,989 @@
+[
+  {
+    "propertyId": "PROP-GLS-01",
+    "ownerId": "OWN-501",
+    "title": "Luxury 3-BHK Lakeview Apartment in Gulshan-2",
+    "location": "Gulshan",
+    "propertyType": "PREMIUM_FAMILY_HOUSING",
+    "purpose": "RENT",
+    "price": 95000,
+    "area": 2550,
+    "bedrooms": 3,
+    "bathrooms": 4,
+    "amenities": [
+      "Lake View",
+      "Elevator",
+      "24/7 Generator",
+      "Gym",
+      "Car Parking",
+      "Security Guard",
+      "CCTV",
+      "Balcony"
+    ],
+    "description": "Serene lakeside residence on Road 71, Gulshan-2. Imported Turkish marble, floor-to-ceiling soundproof glass, fitted Italian kitchen, and 2 designated covered parking slots.",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-10",
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "propertyId": "PROP-GLS-02",
+    "ownerId": "OWN-501",
+    "title": "Peaceful Family Residence near Gulshan Club",
+    "location": "Gulshan",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 75000,
+    "area": 2100,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Elevator",
+      "Generator Backup",
+      "2 Car Parking",
+      "Guard Patrol",
+      "South Facing"
+    ],
+    "description": "Quiet green ambiance on Gulshan-1 Road 132. Spacious living and dining area with private servant quarter and uninterrupted utilities.",
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-14",
+    "updatedAt": "2026-08-15"
+  },
+  {
+    "propertyId": "PROP-GLS-03",
+    "ownerId": "OWN-506",
+    "title": "Executive Studio Suite for Diplomats & Bankers",
+    "location": "Gulshan",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 38000,
+    "area": 900,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "Furnished",
+      "High-Speed WiFi",
+      "Central AC",
+      "Rooftop Pool",
+      "Housekeeping Support"
+    ],
+    "description": "Fully furnished executive studio flat in Gulshan-1. Suitable for corporate bachelors and foreign delegates with round-the-clock TANSU security.",
+    "images": [
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-18",
+    "updatedAt": "2026-08-20"
+  },
+  {
+    "propertyId": "PROP-GLS-04",
+    "ownerId": "OWN-507",
+    "title": "Brand New Ultra-Luxury Duplex Penthouse",
+    "location": "Gulshan",
+    "propertyType": "PREMIUM_FAMILY_HOUSING",
+    "purpose": "SALE",
+    "price": 36000000,
+    "area": 4200,
+    "bedrooms": 5,
+    "bathrooms": 6,
+    "amenities": [
+      "Private Rooftop Lawn",
+      "Smart Automation",
+      "3 Parking",
+      "Private Lift Access",
+      "RAJUK Approved"
+    ],
+    "description": "Masterpiece duplex in Gulshan-2 with 360-degree skyline views. Complete legal vetting and RAJUK sanction verified by TANSU legal team.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-08-22",
+    "updatedAt": "2026-08-25"
+  },
+  {
+    "propertyId": "PROP-GLS-05",
+    "ownerId": "OWN-508",
+    "title": "South-Facing 3-Bed Apartment for Sale",
+    "location": "Gulshan",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 24500000,
+    "area": 2300,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Modern Lobby",
+      "Substation",
+      "Fire Hydrant System",
+      "Community Lounge",
+      "2 Parking"
+    ],
+    "description": "Ready for immediate registration in Gulshan-1. Clean property chain, no bank encumbrance, and guaranteed deed transfer mediated by TANSU.",
+    "images": [
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-08-26",
+    "updatedAt": "2026-08-28"
+  },
+  {
+    "propertyId": "PROP-BNN-01",
+    "ownerId": "OWN-502",
+    "title": "Chic Modern 3-BHK Flat in Banani Road 11",
+    "location": "Banani",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 65000,
+    "area": 1950,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Elevator",
+      "Gas Connection",
+      "Car Parking",
+      "24/7 Security",
+      "Wide Balconies"
+    ],
+    "description": "Walking distance to Banani's best cafes and supermarkets while maintaining peaceful residential tranquility. Double glazed windows and modern kitchen.",
+    "images": [
+      "https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-11",
+    "updatedAt": "2026-08-13"
+  },
+  {
+    "propertyId": "PROP-BNN-02",
+    "ownerId": "OWN-503",
+    "title": "Bachelor Studio Unit with High-Speed Internet",
+    "location": "Banani",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 24000,
+    "area": 800,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "Furnished",
+      "WiFi Included",
+      "Elevator",
+      "Rooftop Garden",
+      "No Curfew Hassle"
+    ],
+    "description": "Ideal for tech engineers and corporate executives in Banani Block D. Clean, quiet, and legally registered with tenant-friendly guidelines.",
+    "images": [
+      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-16",
+    "updatedAt": "2026-08-17"
+  },
+  {
+    "propertyId": "PROP-BNN-03",
+    "ownerId": "OWN-509",
+    "title": "Premium 4-BHK Residence overlooking Banani Lake",
+    "location": "Banani",
+    "propertyType": "PREMIUM_FAMILY_HOUSING",
+    "purpose": "RENT",
+    "price": 105000,
+    "area": 2850,
+    "bedrooms": 4,
+    "bathrooms": 4,
+    "amenities": [
+      "Lake Panorama",
+      "Servant Room",
+      "Gym",
+      "Full Generator",
+      "Intercom",
+      "2 Parking"
+    ],
+    "description": "Spectacular lake views in Banani Block I. Modern architecture, timber flooring in master bed, and 24-hour guarded gate.",
+    "images": [
+      "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-20",
+    "updatedAt": "2026-08-21"
+  },
+  {
+    "propertyId": "PROP-BNN-04",
+    "ownerId": "OWN-510",
+    "title": "Cozy 2-Bed Bachelor Shared Suite in Banani",
+    "location": "Banani",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 30000,
+    "area": 1100,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "amenities": [
+      "Elevator",
+      "Security",
+      "Separate Kitchenette",
+      "Balcony",
+      "Individual Meters"
+    ],
+    "description": "Designed for two university students or young professionals sharing. Prime location near Kemal Ataturk Avenue with fast access to metro and bus corridors.",
+    "images": [
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-23",
+    "updatedAt": "2026-08-24"
+  },
+  {
+    "propertyId": "PROP-BNN-05",
+    "ownerId": "OWN-511",
+    "title": "Ready Luxury Flat for Sale in Banani Block E",
+    "location": "Banani",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 21500000,
+    "area": 2100,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "RAJUK Approved",
+      "Substation",
+      "Generator",
+      "Parking",
+      "Community Rooftop"
+    ],
+    "description": "Spacious north-east facing corner flat with abundant natural daylight. Legal papers scrutinized and certified by TANSU Property Verification Cell.",
+    "images": [
+      "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1576941089067-2de3c901e126?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-08-27",
+    "updatedAt": "2026-08-29"
+  },
+  {
+    "propertyId": "PROP-DHN-01",
+    "ownerId": "OWN-502",
+    "title": "Serene Family Flat Facing Road 8A Park",
+    "location": "Dhanmondi",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 45000,
+    "area": 1750,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Park View",
+      "Elevator",
+      "Gas Connection",
+      "Car Parking",
+      "Security Guard",
+      "Balcony"
+    ],
+    "description": "Quiet residential sanctuary on Dhanmondi Road 8A. Minutes from reputed schools, universities, healthcare centers, and lakeside walking tracks.",
+    "images": [
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-15",
+    "updatedAt": "2026-08-16"
+  },
+  {
+    "propertyId": "PROP-DHN-02",
+    "ownerId": "OWN-512",
+    "title": "Peaceful 4-BHK Lakeside Residence on Road 4",
+    "location": "Dhanmondi",
+    "propertyType": "PREMIUM_FAMILY_HOUSING",
+    "purpose": "RENT",
+    "price": 70000,
+    "area": 2350,
+    "bedrooms": 4,
+    "bathrooms": 4,
+    "amenities": [
+      "Lakeside Breeze",
+      "Generator",
+      "2 Car Parking",
+      "CCTV",
+      "Modern Bathrooms"
+    ],
+    "description": "Beautifully maintained home with lush green surroundings in old Dhanmondi. Expansive balconies and separate drawing-dining configuration.",
+    "images": [
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-17",
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "propertyId": "PROP-DHN-03",
+    "ownerId": "OWN-513",
+    "title": "Quiet Bachelor Studio near Medical Colleges",
+    "location": "Dhanmondi",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 21000,
+    "area": 720,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "WiFi",
+      "Water Filter",
+      "Lift",
+      "Security Guard",
+      "Balcony"
+    ],
+    "description": "Specially verified unit near Ibn Sina and Bangladesh Medical College. Welcoming doctor interns, researchers, and professional bachelors.",
+    "images": [
+      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-19",
+    "updatedAt": "2026-08-20"
+  },
+  {
+    "propertyId": "PROP-DHN-04",
+    "ownerId": "OWN-514",
+    "title": "Elegant Family Flat near Satmasjid Road",
+    "location": "Dhanmondi",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 48000,
+    "area": 1850,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Lift",
+      "Generator",
+      "Dedicated Parking",
+      "Titas Gas",
+      "24/7 Guard"
+    ],
+    "description": "Quiet residential by-lane off Satmasjid Road. Ideal for families wanting proximity to shopping malls, schools, and medical hubs.",
+    "images": [
+      "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-24",
+    "updatedAt": "2026-08-25"
+  },
+  {
+    "propertyId": "PROP-DHN-05",
+    "ownerId": "OWN-515",
+    "title": "Prime 3-Bed Apartment for Sale on Road 27",
+    "location": "Dhanmondi",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 19500000,
+    "area": 2050,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "RAJUK Approved",
+      "Substation",
+      "Generator",
+      "Parking",
+      "Intercom System"
+    ],
+    "description": "South-facing apartment on Dhanmondi 27. Freehold land ownership, all mutation and tax tokens verified clean by TANSU.",
+    "images": [
+      "https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-08-29",
+    "updatedAt": "2026-08-30"
+  },
+  {
+    "propertyId": "PROP-UTR-01",
+    "ownerId": "OWN-501",
+    "title": "Executive Modern Duplex Penthouse in Sector 4",
+    "location": "Uttara",
+    "propertyType": "PREMIUM_FAMILY_HOUSING",
+    "purpose": "RENT",
+    "price": 110000,
+    "area": 3200,
+    "bedrooms": 4,
+    "bathrooms": 5,
+    "amenities": [
+      "Private Terrace",
+      "Duplex Stairs",
+      "3 Parking",
+      "Smart Locks",
+      "Full Generator Backup",
+      "Servant Room"
+    ],
+    "description": "Sector 4 Uttara duplex penthouse. Private roof garden, uninterrupted utilities, modern imported fittings, and round-the-clock TANSU-managed security.",
+    "images": [
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-01",
+    "updatedAt": "2026-09-02"
+  },
+  {
+    "propertyId": "PROP-UTR-02",
+    "ownerId": "OWN-516",
+    "title": "Peaceful 3-BHK Family Flat in Sector 7",
+    "location": "Uttara",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 36000,
+    "area": 1650,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Lift",
+      "Gas Connection",
+      "Covered Parking",
+      "CCTV",
+      "Balcony"
+    ],
+    "description": "Walking distance to Sector 7 park and Rabindra Sarani. Beautiful neighborhood with wide avenues, trees, and quiet residential ambiance.",
+    "images": [
+      "https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-03",
+    "updatedAt": "2026-09-04"
+  },
+  {
+    "propertyId": "PROP-UTR-03",
+    "ownerId": "OWN-517",
+    "title": "Airy 3-Bed Family Apartment in Sector 13",
+    "location": "Uttara",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 32000,
+    "area": 1550,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "amenities": [
+      "Elevator",
+      "Generator",
+      "Security Guard",
+      "Balcony"
+    ],
+    "description": "South-facing cross ventilation apartment in Sector 13. Close to renowned schools and modern shopping outlets.",
+    "images": [
+      "https://images.unsplash.com/photo-1617098900591-3f90928e8c54?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-04",
+    "updatedAt": "2026-09-05"
+  },
+  {
+    "propertyId": "PROP-UTR-04",
+    "ownerId": "OWN-518",
+    "title": "Smart Bachelor Flat near Metro Station Sector 11",
+    "location": "Uttara",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 19000,
+    "area": 750,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "Near Metro",
+      "WiFi",
+      "Lift",
+      "Security",
+      "Separate Sub-Meter"
+    ],
+    "description": "Quick 2-minute stroll to MRT-6 Uttara North Station. Perfect for airline crew, airport personnel, or corporate professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1618219740975-d40978bb7378?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-06",
+    "updatedAt": "2026-09-07"
+  },
+  {
+    "propertyId": "PROP-UTR-05",
+    "ownerId": "OWN-519",
+    "title": "Spacious 3-BHK Flat for Sale in Sector 14",
+    "location": "Uttara",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 13500000,
+    "area": 1780,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "RAJUK Approved",
+      "Covered Parking",
+      "Lift",
+      "Generator",
+      "Intercom"
+    ],
+    "description": "Brand new ready flat. Full legal clearance and transparent paperwork with TANSU administrative intermediary escrow support.",
+    "images": [
+      "https://images.unsplash.com/photo-1617104551722-3b2d51366400?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-09-08",
+    "updatedAt": "2026-09-09"
+  },
+  {
+    "propertyId": "PROP-MIR-01",
+    "ownerId": "OWN-505",
+    "title": "Cozy Family Apartment Near Metro Station Mirpur-10",
+    "location": "Mirpur",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 28000,
+    "area": 1350,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "amenities": [
+      "Lift",
+      "Generator",
+      "Security",
+      "Balcony",
+      "Titas Gas"
+    ],
+    "description": "Situated 3 minutes walk from the MRT-6 Metro Rail Station. Fast, reliable commute across Dhaka with modern residential finishes.",
+    "images": [
+      "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-05",
+    "updatedAt": "2026-09-06"
+  },
+  {
+    "propertyId": "PROP-MIR-02",
+    "ownerId": "OWN-520",
+    "title": "Affordable 3-Bed Family Flat in Mirpur DOHS",
+    "location": "Mirpur",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 34000,
+    "area": 1600,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "DOHS High Security",
+      "Park & Lake",
+      "Community Mosque",
+      "Covered Parking",
+      "Lift"
+    ],
+    "description": "Highly secure cantonment perimeter within Mirpur DOHS. Children play safely and peaceful lakeside walking track right across.",
+    "images": [
+      "https://images.unsplash.com/photo-1618221469555-7f3ad97540d6?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-06",
+    "updatedAt": "2026-09-07"
+  },
+  {
+    "propertyId": "PROP-MIR-03",
+    "ownerId": "OWN-521",
+    "title": "Furnished Bachelor Room with High-Speed Net in Mirpur-2",
+    "location": "Mirpur",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 14000,
+    "area": 550,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "Furnished",
+      "WiFi",
+      "Meal Facility Provision",
+      "Security",
+      "Rooftop Access"
+    ],
+    "description": "Near National Cricket Stadium and Mirpur-2 commerce college. Budget-friendly for students and junior executives with quiet study rules.",
+    "images": [
+      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-07",
+    "updatedAt": "2026-09-08"
+  },
+  {
+    "propertyId": "PROP-MIR-04",
+    "ownerId": "OWN-522",
+    "title": "Bachelor Shared Suite in Mirpur-12 Metro Area",
+    "location": "Mirpur",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 16000,
+    "area": 680,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "Lift",
+      "Generator",
+      "Guard",
+      "Metro Access 2 Min",
+      "Balcony"
+    ],
+    "description": "Direct access to Mirpur-12 Metro Station. Easy commute to Motijheel, Kawran Bazar, and Farmgate in 20 minutes.",
+    "images": [
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-08",
+    "updatedAt": "2026-09-09"
+  },
+  {
+    "propertyId": "PROP-MIR-05",
+    "ownerId": "OWN-523",
+    "title": "Affordable 3-BHK Flat for Sale in Mirpur-1",
+    "location": "Mirpur",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 9200000,
+    "area": 1420,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "RAJUK Approved",
+      "Elevator",
+      "Gas Connection",
+      "Parking",
+      "Water Pump"
+    ],
+    "description": "Great value ready-to-move apartment near Mirpur-1 Sony Square. Title vetted, no dues, legal registration assistance through TANSU.",
+    "images": [
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-09-09",
+    "updatedAt": "2026-09-10"
+  },
+  {
+    "propertyId": "PROP-BSH-01",
+    "ownerId": "OWN-504",
+    "title": "Exclusive Brand New Flat for Sale in Block I",
+    "location": "Bashundhara",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 18500000,
+    "area": 2150,
+    "bedrooms": 4,
+    "bathrooms": 4,
+    "amenities": [
+      "RAJUK Approved",
+      "2 Car Parking",
+      "Community Hall",
+      "Substation",
+      "Fire Safety",
+      "Swimming Pool"
+    ],
+    "description": "Brand new south-facing luxury apartment in Block I, Bashundhara R/A. Ready for immediate registration with full legal vetting completed by TANSU Niraloy legal desk.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-08-25",
+    "updatedAt": "2026-08-27"
+  },
+  {
+    "propertyId": "PROP-BSH-02",
+    "ownerId": "OWN-524",
+    "title": "Peaceful 3-Bed Family Flat in Block C",
+    "location": "Bashundhara",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 42000,
+    "area": 1750,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Lift",
+      "Generator",
+      "Parking",
+      "Security 24/7",
+      "Gas Connection"
+    ],
+    "description": "Quiet residential Block C near Apollo Hospital (Evercare). Clean green air, wide roads, and round-the-clock gated security.",
+    "images": [
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-28",
+    "updatedAt": "2026-08-29"
+  },
+  {
+    "propertyId": "PROP-BSH-03",
+    "ownerId": "OWN-525",
+    "title": "NSU & IUB Student Studio Bachelor Suite in Block D",
+    "location": "Bashundhara",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 18000,
+    "area": 650,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "WiFi Included",
+      "Lift",
+      "Study Desk",
+      "Balcony",
+      "Security"
+    ],
+    "description": "A short 5-minute walk to North South University (NSU) and Independent University Bangladesh (IUB). High-speed fiber internet and peaceful atmosphere.",
+    "images": [
+      "https://images.unsplash.com/photo-1600566753104-685f4f24cb4d?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-08-30",
+    "updatedAt": "2026-08-31"
+  },
+  {
+    "propertyId": "PROP-BSH-04",
+    "ownerId": "OWN-526",
+    "title": "Shared 2-Bed Bachelor Unit in Block F",
+    "location": "Bashundhara",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 26000,
+    "area": 980,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "amenities": [
+      "Lift",
+      "Generator",
+      "Gas",
+      "Balcony",
+      "24h Guard"
+    ],
+    "description": "Ideal for 2 university classmates or office colleagues. Close to restaurants, gyms, and shuttle stops with zero landlord disturbance.",
+    "images": [
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-02",
+    "updatedAt": "2026-09-03"
+  },
+  {
+    "propertyId": "PROP-BSH-05",
+    "ownerId": "OWN-527",
+    "title": "Luxury Duplex with Private Garden in Block G",
+    "location": "Bashundhara",
+    "propertyType": "PREMIUM_FAMILY_HOUSING",
+    "purpose": "RENT",
+    "price": 88000,
+    "area": 2900,
+    "bedrooms": 4,
+    "bathrooms": 4,
+    "amenities": [
+      "Private Garden",
+      "2 Parking",
+      "Smart Locks",
+      "Full Generator",
+      "Servant Bath"
+    ],
+    "description": "Spectacular architectural duplex in Bashundhara Block G with private manicured lawn and imported sanitary fittings.",
+    "images": [
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1598928636135-d146006ff4be?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-05",
+    "updatedAt": "2026-09-06"
+  },
+  {
+    "propertyId": "PROP-MOH-01",
+    "ownerId": "OWN-528",
+    "title": "Serene 3-Bed Family Flat in Japan Garden City",
+    "location": "Mohammadpur",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 32000,
+    "area": 1480,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "amenities": [
+      "Gated Community",
+      "Kids Playground",
+      "Swimming Pool",
+      "Lift",
+      "Generator",
+      "Mosque"
+    ],
+    "description": "Within Japan Garden City complex. Excellent self-contained family community with parks, internal supermarkets, and 24-hour security guards.",
+    "images": [
+      "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-02",
+    "updatedAt": "2026-09-03"
+  },
+  {
+    "propertyId": "PROP-MOH-02",
+    "ownerId": "OWN-529",
+    "title": "Bright South-Facing Flat in Lalmatia Block B",
+    "location": "Mohammadpur",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 38000,
+    "area": 1650,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Lift",
+      "Generator",
+      "Parking",
+      "Gas Connection",
+      "Park Nearby"
+    ],
+    "description": "Bordering Dhanmondi 27. Lalmatia Block B is renowned for its cultural environment, wide trees, and quiet residential neighborhood.",
+    "images": [
+      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-04",
+    "updatedAt": "2026-09-05"
+  },
+  {
+    "propertyId": "PROP-MOH-03",
+    "ownerId": "OWN-530",
+    "title": "Bachelor Studio Flat near Ring Road Mohammadpur",
+    "location": "Mohammadpur",
+    "propertyType": "BACHELOR_HOUSE",
+    "purpose": "RENT",
+    "price": 15000,
+    "area": 600,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "amenities": [
+      "Lift",
+      "WiFi",
+      "Water 24/7",
+      "Security",
+      "Separate Kitchenette"
+    ],
+    "description": "Situated on Ring Road with instant bus and rickshaw connections to Dhanmondi, Farmgate, and Mirpur. Clean, independent bachelor suite.",
+    "images": [
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-06",
+    "updatedAt": "2026-09-07"
+  },
+  {
+    "propertyId": "PROP-MOH-04",
+    "ownerId": "OWN-531",
+    "title": "Quiet 3-BHK Family Home on Asad Avenue",
+    "location": "Mohammadpur",
+    "propertyType": "FAMILY_HOUSE",
+    "purpose": "RENT",
+    "price": 40000,
+    "area": 1720,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "Elevator",
+      "Gas",
+      "Car Parking",
+      "Guard Patrol",
+      "Balconies"
+    ],
+    "description": "Convenient location on Asad Avenue near Town Hall market and St. Joseph School. Spacious floor layout with natural breeze.",
+    "images": [
+      "https://images.unsplash.com/photo-1560185009-dddeb820c7b7?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_RENT",
+    "createdAt": "2026-09-08",
+    "updatedAt": "2026-09-09"
+  },
+  {
+    "propertyId": "PROP-MOH-05",
+    "ownerId": "OWN-532",
+    "title": "Brand New Flat for Sale on Ring Road Extension",
+    "location": "Mohammadpur",
+    "propertyType": "FLAT_SALE",
+    "purpose": "SALE",
+    "price": 11500000,
+    "area": 1600,
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "amenities": [
+      "RAJUK Approved",
+      "Generator",
+      "Lift",
+      "Parking",
+      "Fire Safety"
+    ],
+    "description": "Under-market price opportunity in Mohammadpur. Clear title deeds and registration paperwork verified by TANSU legal desk.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-61dc36dc98c8?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "verificationStatus": "VERIFIED",
+    "availabilityStatus": "AVAILABLE_FOR_SALE",
+    "createdAt": "2026-09-10",
+    "updatedAt": "2026-09-11"
+  }
+]
