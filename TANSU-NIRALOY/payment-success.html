@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Receipt | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: #fff !important; }
+      .receipt-wrapper { padding: 0 !important; }
+    }
+    .receipt-wrapper {
+      min-height: 100vh;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+    .receipt-card {
+      max-width: 600px;
+      width: 100%;
+      background: #fff;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 40px -10px rgba(15,30,54,0.15), 0 0 0 1px var(--color-border);
+      overflow: hidden;
+    }
+    .receipt-header {
+      background: linear-gradient(135deg, #0F1E36 0%, #1E3A5F 100%);
+      color: #fff;
+      padding: 1.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .receipt-stamp {
+      width: 56px;
+      height: 56px;
+      background: #22C55E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.25);
+    }
+    .receipt-body {
+      padding: 2rem;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.9rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .receipt-row:last-child { border-bottom: none; }
+    .receipt-row .label { color: var(--color-text-muted); }
+    .receipt-row .value { font-weight: 600; color: var(--color-primary); text-align: right; max-width: 65%; }
+    .receipt-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      padding: 0.85rem 0 0 0;
+      margin-top: 0.5rem;
+      border-top: 2px solid var(--color-primary);
+    }
+    .receipt-section-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      margin: 1.5rem 0 0.5rem 0;
+    }
+    .receipt-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 1rem 0;
+    }
+    .receipt-footer {
+      background: var(--color-surface-alt);
+      padding: 1.25rem 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      border-top: 1px solid var(--color-border);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="site-header-container"></div>
+
+  <div class="receipt-wrapper">
+    <div class="receipt-card">
+      <!-- Receipt Header -->
+      <div class="receipt-header">
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.55); margin-bottom:0.25rem;">Official Intermediary Payment Receipt</div>
+          <div style="font-size:1.35rem; font-weight:800;">TANSU Niraloy</div>
+          <div style="font-size:0.78rem; color:rgba(255,255,255,0.65); margin-top:0.1rem;">Property Rental & Sale Management System</div>
+        </div>
+        <div class="receipt-stamp"></div>
+      </div>
+
+      <!-- Receipt Body -->
+      <div class="receipt-body">
+
+        <!-- Success Banner -->
+        <div style="text-align:center; margin-bottom:1.5rem;">
+          <h2 style="font-size:1.6rem; color:#16A34A; margin-bottom:0.15rem;">Payment Successful</h2>
+          <p class="text-muted" style="font-size:0.88rem; margin:0;">Transaction cleared through TANSU Niraloy Secure Intermediary Gateway</p>
+        </div>
+
+        <!-- Transaction Info -->
+        <div class="receipt-section-title">Transaction Details</div>
+        <div class="receipt-row">
+          <span class="label">Transaction ID</span>
+          <code class="value" id="r-txn-id">TXN-...</code>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Due Reference</span>
+          <code class="value" id="r-due-id">DUE-...</code>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Payment Date & Time</span>
+          <span class="value" id="r-date">—</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Payment Method</span>
+          <span class="value" id="r-method">—</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Gateway Status</span>
+          <span class="value"><span class="badge badge-verified" style="font-size:0.78rem;"> CLEARED</span></span>
+        </div>
+
+        <!-- Property & Tenant Info -->
+        <div class="receipt-section-title">Property & Tenant</div>
+        <div class="receipt-row">
+          <span class="label">Property ID</span>
+          <span class="value" id="r-prop-id">PROP-...</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Property Title</span>
+          <span class="value" id="r-prop-title">—</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Location</span>
+          <span class="value" id="r-location">—</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Billed Tenant</span>
+          <span class="value" id="r-tenant">—</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Billing Period</span>
+          <span class="value" id="r-period">—</span>
+        </div>
+
+        <!-- Payment Breakdown -->
+        <div class="receipt-section-title">Payment Breakdown</div>
+        <div class="receipt-row" id="r-row-rent">
+          <span class="label">Monthly Rent</span>
+          <span class="value" id="r-rent">BDT  0</span>
+        </div>
+        <div class="receipt-row" id="r-row-utility" style="display:none;">
+          <span class="label">Utility & Service Charges</span>
+          <span class="value" id="r-utility">BDT  0</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">Intermediary Gateway Fee</span>
+          <span class="value" id="r-fee">BDT  150</span>
+        </div>
+        <div class="receipt-row" id="r-row-discount" style="display:none;">
+          <span class="label">Promo Discount</span>
+          <span class="value" style="color:var(--color-success);" id="r-discount">− BDT  0</span>
+        </div>
+        <div class="receipt-total-row">
+          <span>Total Paid</span>
+          <span id="r-total">BDT  0</span>
+        </div>
+
+        
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="receipt-footer no-print">
+        <div class="flex gap-3 justify-center mb-3">
+          <button class="btn btn-outline" onclick="window.print()" style="font-weight:700;">
+             Print / Download Receipt
+          </button>
+          <a href="tenant-dashboard.html" class="btn btn-primary" style="font-weight:700;">
+            Back to Dashboard</a>
+        </div>
+        <div>Secured by TANSU Niraloy &bull; 256-Bit SSL Encrypted &bull; Bangladesh Bank Clearing</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const txnId = urlParams.get("txnId") || "TXN-88219";
+      const propId = urlParams.get("propId") || "PROP-102";
+      const totalAmt = Number(urlParams.get("amount") || 45150);
+      const method = decodeURIComponent(urlParams.get("method") || "ONLINE_GATEWAY");
+      const payType = decodeURIComponent(urlParams.get("type") || "Monthly Rent Payment");
+      const dueId = urlParams.get("dueId") || "";
+      const fee = Number(urlParams.get("fee") || 150);
+      const discount = Number(urlParams.get("discount") || 0);
+      const baseAmount = totalAmt - fee + discount;
+
+      // Transaction fields
+      document.getElementById("r-txn-id").textContent = txnId;
+      document.getElementById("r-due-id").textContent = dueId || "N/A";
+      document.getElementById("r-date").textContent = new Date().toLocaleString("en-BD");
+      document.getElementById("r-fee").textContent = `BDT  ${fee.toLocaleString()}`;
+      document.getElementById("r-total").textContent = `BDT  ${totalAmt.toLocaleString()}`;
+
+      // Payment method display
+      const methodEl = document.getElementById("r-method");
+      if (method.includes("bKash")) {
+        methodEl.innerHTML = `<img src="assets/logos/bkash.png" alt="bKash" style="height:16px;vertical-align:middle;margin-right:4px;"> ${method}`;
+      } else if (method.includes("Nagad")) {
+        methodEl.innerHTML = `<img src="assets/logos/nagad.png" alt="Nagad" style="height:15px;vertical-align:middle;margin-right:4px;"> ${method}`;
+      } else if (method.includes("Rocket")) {
+        methodEl.innerHTML = `<img src="assets/logos/rocket.png" alt="Rocket" style="height:16px;vertical-align:middle;margin-right:4px;"> ${method}`;
+      } else {
+        methodEl.textContent = method;
+      }
+
+      // Discount line
+      if (discount > 0) {
+        document.getElementById("r-row-discount").style.display = "flex";
+        document.getElementById("r-discount").textContent = `− BDT  ${discount.toLocaleString()}`;
+      }
+
+      // Breakdown — rent vs utility
+      document.getElementById("r-rent").textContent = `BDT  ${baseAmount.toLocaleString()}`;
+
+      // Load property and due data from localStorage for context
+      const dues = JSON.parse(localStorage.getItem("tansu_dues") || "[]");
+      const props = JSON.parse(localStorage.getItem("tansu_properties") || "[]");
+      const user = Auth.getCurrentUser();
+
+      const matchedDue = dueId ? dues.find(d => d.dueId === dueId) : null;
+      const matchedProp = props.find(p => p.propertyId === propId);
+
+      document.getElementById("r-prop-id").textContent = propId;
+      document.getElementById("r-prop-title").textContent = matchedDue ? matchedDue.flatTitle : (matchedProp ? matchedProp.title : "Rental Property");
+      document.getElementById("r-location").textContent = matchedDue ? matchedDue.location : (matchedProp ? `${matchedProp.location}, Dhaka` : "Dhaka");
+      document.getElementById("r-tenant").textContent = user ? `${user.name} (${user.userId})` : (matchedDue ? `${matchedDue.tenantName} (${matchedDue.tenantId})` : "Registered Tenant");
+      document.getElementById("r-period").textContent = matchedDue ? matchedDue.dueMonth : payType;
+
+      // Mark due as PAID in localStorage (in case not already done by api.js)
+      if (dueId) {
+        try {
+          let dues2 = JSON.parse(localStorage.getItem("tansu_dues") || "[]");
+          let updated = false;
+          dues2 = dues2.map(d => {
+            if (d.dueId === dueId && d.status !== "PAID") {
+              updated = true;
+              return { ...d, paidAmount: d.totalBilled, dueAmount: 0.0, status: "PAID", paymentDate: new Date().toISOString().split("T")[0] };
+            }
+            return d;
+          });
+          if (updated) localStorage.setItem("tansu_dues", JSON.stringify(dues2));
+        } catch(e) {}
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content flex items-center justify-center" style="min-height: 80vh;">
+    <div class="container" style="max-width: 580px;">
+      <div class="card" style="padding: 2.5rem; text-align: center;">
+        <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.25rem auto;">
+          
+        </div>
+
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.35rem; color: var(--color-primary);">Payment Successful</h2>
+        <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 2rem;">
+          Your transaction has been cleared through TANSU Niraloy Intermediary Gateway.
+        </p>
+
+        <!-- Receipt Summary Box -->
+        <div style="background: var(--color-surface-alt); border-radius: var(--radius-md); padding: 1.5rem; text-align: left; margin-bottom: 2rem; border: 1px solid var(--color-border); font-size: 0.9rem;">
+          <div class="flex justify-between py-1 mb-2" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            <span class="text-muted">Transaction ID:</span>
+            <code id="success-txn-id" style="font-weight: 700;">TXN-88219</code>
+          </div>
+          <div class="flex justify-between py-1 mb-2" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            <span class="text-muted">Property ID:</span>
+            <strong id="success-prop-id">PROP-102</strong>
+          </div>
+          <div class="flex justify-between py-1 mb-2" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            <span class="text-muted">Payment Type:</span>
+            <span id="success-pay-type">Monthly Rent</span>
+          </div>
+          <div class="flex justify-between py-1 mb-2" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            <span class="text-muted">Payment Method:</span>
+            <span id="success-pay-method">CARD</span>
+          </div>
+          <div class="flex justify-between py-1 mb-2" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            <span class="text-muted">Utility Charge:</span>
+            <span>Included (0 BDT)</span>
+          </div>
+          <div class="flex justify-between py-1 mb-2" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">
+            <span class="text-muted">Date &amp; Time:</span>
+            <span id="success-pay-date">...</span>
+          </div>
+          <div class="flex justify-between py-1" style="font-size: 1.15rem; font-weight: 800; color: var(--color-primary); padding-top: 0.5rem;">
+            <span>Amount Paid:</span>
+            <span id="success-amount">BDT  0</span>
+          </div>
+        </div>
+
+        <div class="flex gap-3 justify-center">
+          <button class="btn btn-outline" onclick="window.print()">
+            📄 Download Receipt
+          </button>
+          <a href="tenant-dashboard.html" class="btn btn-primary">
+            Back to Tenant Dashboard &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      document.getElementById("success-txn-id").textContent = urlParams.get("txnId") || "TXN-88219";
+      document.getElementById("success-prop-id").textContent = urlParams.get("propId") || "PROP-102";
+      const method = decodeURIComponent(urlParams.get("method") || "ONLINE_GATEWAY");
+      const methodEl = document.getElementById("success-pay-method");
+      if (method.includes("bKash")) {
+        methodEl.innerHTML = `<img src="assets/logos/bkash.png" alt="bKash" style="height: 18px; vertical-align: middle; margin-right: 6px;"> <strong>${method}</strong>`;
+      } else if (method.includes("Nagad")) {
+        methodEl.innerHTML = `<img src="assets/logos/nagad.png" alt="Nagad" style="height: 18px; vertical-align: middle; margin-right: 6px;"> <strong>${method}</strong>`;
+      } else if (method.includes("Rocket")) {
+        methodEl.innerHTML = `<img src="assets/logos/rocket.png" alt="Rocket" style="height: 18px; vertical-align: middle; margin-right: 6px;"> <strong>${method}</strong>`;
+      } else {
+        methodEl.textContent = method;
+      }
+      document.getElementById("success-pay-date").textContent = new Date().toLocaleString();
+
+      const amt = Number(urlParams.get("amount") || 45150);
+      document.getElementById("success-amount").textContent = `BDT  ${amt.toLocaleString()}`;
+
+      const dueId = urlParams.get("dueId");
+      if (dueId) {
+        try {
+          let dues = JSON.parse(localStorage.getItem("tansu_dues") || "[]");
+          let updated = false;
+          dues = dues.map(d => {
+            if (d.dueId === dueId && d.status !== "PAID") {
+              updated = true;
+              return { ...d, paidAmount: d.totalBilled, dueAmount: 0.0, status: "PAID", paymentDate: new Date().toISOString().split("T")[0] };
+            }
+            return d;
+          });
+          if (updated) localStorage.setItem("tansu_dues", JSON.stringify(dues));
+        } catch (e) {}
+      }
+    });
+  </script>
+</body>
+</html>
+

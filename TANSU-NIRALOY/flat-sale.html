@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flats & Apartments for Sale in Dhaka | TANSU Niraloy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="sale">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="mb-6">
+        <span class="section-subtitle">Category Collection</span>
+        <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">Flats for Sale in Dhaka</h1>
+        <p class="text-muted" id="properties-count">RAJUK verified properties with clear ownership deeds and full TANSU legal support.</p>
+      </div>
+
+      <div class="card mb-8" style="padding: 1.25rem; background-color: var(--color-surface); border-radius: var(--radius-lg);">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-location" class="form-label" style="font-size: 0.8rem;">Location</label>
+            <select id="filter-location" class="form-select">
+              <option value="ALL">All Dhaka Areas</option>
+              <option value="Bashundhara">Bashundhara</option>
+              <option value="Gulshan">Gulshan</option>
+              <option value="Uttara">Uttara</option>
+              <option value="Dhanmondi">Dhanmondi</option>
+            </select>
+          </div>
+          <input type="hidden" id="filter-type" value="FLAT_SALE">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-purpose" class="form-label" style="font-size: 0.8rem;">Purpose</label>
+            <select id="filter-purpose" class="form-select">
+              <option value="SALE">Sale Only</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-bedrooms" class="form-label" style="font-size: 0.8rem;">Bedrooms</label>
+            <select id="filter-bedrooms" class="form-select">
+              <option value="ALL">Any Bedrooms</option>
+              <option value="3">3+ Bedrooms</option>
+              <option value="4">4+ Bedrooms</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0; display:flex; align-items:flex-end;">
+            <button class="btn btn-outline btn-block" id="btn-clear-filters">Reset Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="properties-grid" class="grid grid-cols-3 gap-6"></div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      PropertiesController.initCatalog("FLAT_SALE");
+    });
+  </script>
+</body>
+</html>

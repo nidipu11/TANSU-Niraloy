@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escorted Visit Requests | TANSU Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="admin-visits">
+
+  <div id="site-header-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <span class="section-subtitle">Field Officer Dispatch</span>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">Escorted Property Visit Requests</h1>
+          <p class="text-muted">Schedule and assign TANSU officers to accompany tenant viewings. Tenants and Owners never meet directly without TANSU mediation.</p>
+        </div>
+        <a href="admin-dashboard.html" class="btn btn-outline">&larr; Back to Dashboard</a>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Tenant ID</th>
+                <th>Property ID</th>
+                <th>Type</th>
+                <th>Preferred Appointment</th>
+                <th>Status</th>
+                <th>Dispatch Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-requests-table-body">
+              <!-- Rendered by js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      AdminController.loadRequestsQueue("VISIT");
+    });
+  </script>
+</body>
+</html>
