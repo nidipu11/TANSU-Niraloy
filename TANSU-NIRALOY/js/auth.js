@@ -23,9 +23,10 @@ const Auth = {
    */
   initSession() {
     try {
-      if (!sessionStorage.getItem(this.SESSION_FLAG)) {
-        localStorage.removeItem(this.USER_KEY);
-        localStorage.removeItem(this.TOKEN_KEY);
+      const storedUser = localStorage.getItem(this.USER_KEY);
+      if (storedUser) {
+        sessionStorage.setItem(this.SESSION_FLAG, "authenticated");
+      } else if (!sessionStorage.getItem(this.SESSION_FLAG)) {
         sessionStorage.setItem(this.SESSION_FLAG, "guest");
       }
     } catch (e) {

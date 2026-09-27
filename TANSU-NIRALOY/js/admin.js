@@ -14,29 +14,117 @@
 const AdminController = {
   async updateSidebarCounts() {
     try {
-      const pendingProps = (await apiGet("/api/properties/pending")).data || [];
-      const navVerify = document.querySelector('a[href="admin-verify-listings.html"] span');
-      if (navVerify) navVerify.innerHTML = 'Verify Listings' + (pendingProps.length > 0 ? ' <strong>( ' + pendingProps.length + ' )</strong>' : '');
+      const setBadge = (href, title, count, badgeBg = "#EF4444") => {
+        const link = document.querySelector(`a[href="${href}"]`);
+        if (!link) return;
+        link.style.display = "flex";
+        link.style.alignItems = "center";
+        link.style.justifyContent = "space-between";
 
-      const reqsRes = (await apiGet("/api/requests")).data || [];
-      const pendingRentals = reqsRes.filter(r => r.requestType === "RENTAL" && r.status === "PENDING").length;
-      const pendingPurchases = reqsRes.filter(r => r.requestType === "PURCHASE" && r.status === "PENDING").length;
-      const pendingVisits = reqsRes.filter(r => r.requestType === "VISIT" && r.status === "PENDING").length;
+        const badgeHtml = count > 0
+          ? `<span class="sidebar-badge" style="background: ${badgeBg}; color: #ffffff; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: auto; box-shadow: 0 1px 2px rgba(0,0,0,0.15); min-width: 20px; text-align: center; line-height: 1.3;">${count}</span>`
+          : "";
 
-      const navRent = document.querySelector('a[href="admin-rental-requests.html"] span');
-      if (navRent) navRent.innerHTML = 'Rental Requests' + (pendingRentals > 0 ? ' <strong>( ' + pendingRentals + ' )</strong>' : '');
+        link.innerHTML = `<span>${title}</span>${badgeHtml}`;
+      };
 
-      const navPurchase = document.querySelector('a[href="admin-purchase-requests.html"] span');
-      if (navPurchase) navPurchase.innerHTML = 'Purchase Requests' + (pendingPurchases > 0 ? ' <strong>( ' + pendingPurchases + ' )</strong>' : '');
+      // 1. Pending Property Listings to Verify
+      let pendingPropsCount = 0;
+      try {
+        const pRes = await apiGet("/api/properties/pending");
+        const pendingProps = (pRes && pRes.data) || [];
+        pendingPropsCount = Array.isArray(pendingProps) ? pendingProps.length : 0;
+      } catch(err) {
+        console.warn("Could not fetch pending properties:", err);
+      }
+      setBadge("admin-verify-listings.html", "Verify Listings", pendingPropsCount, "#F59E0B");
 
-      const navVisit = document.querySelector('a[href="admin-visit-requests.html"] span');
-      if (navVisit) navVisit.innerHTML = 'Visit Requests' + (pendingVisits > 0 ? ' <strong>( ' + pendingVisits + ' )</strong>' : '');
-    } catch(e){}
+      // 2. User Requests (Rental, Purchase, Visit)
+      let reqs = [];
+      try {
+        const rRes = await apiGet("/api/requests");
+        if (rRes && Array.isArray(rRes.data)) {
+          reqs = rRes.data;
+        } else if (Array.isArray(rRes)) {
+          reqs = rRes;
+        }
+      } catch(err) {
+        console.warn("Could not fetch requests for sidebar:", err);
+      }
+
+      if (!reqs || reqs.length === 0) {
+        try {
+          reqs = JSON.parse(localStorage.getItem("tansu_requests") || "[]");
+        } catch(e){}
+      }
+
+      const isPending = (status) => {
+        const s = (status || "").toString().trim().toUpperCase();
+        return s === "PENDING" || s === "" || s === "NEW" || s === "SUBMITTED";
+      };
+
+      // Rental Requests (supports RENT, RENTAL, RENT_REQUEST)
+      const pendingRentals = reqs.filter(r => {
+        const t = (r.requestType || "").toString().toUpperCase();
+        return t.includes("RENT") && isPending(r.status);
+      }).length;
+      setBadge("admin-rental-requests.html", "Rental Requests", pendingRentals, "#EF4444");
+
+      // Purchase Requests (supports BUY, PURCHASE, SALE, BUY_REQUEST)
+      const pendingPurchases = reqs.filter(r => {
+        const t = (r.requestType || "").toString().toUpperCase();
+        return (t.includes("BUY") || t.includes("PURCHASE") || t.includes("SALE")) && isPending(r.status);
+      }).length;
+      setBadge("admin-purchase-requests.html", "Purchase Requests", pendingPurchases, "#8B5CF6");
+
+      // Visit Requests (supports VISIT, VISIT_SCHEDULE, SCHEDULE)
+      const pendingVisits = reqs.filter(r => {
+        const t = (r.requestType || "").toString().toUpperCase();
+        return t.includes("VISIT") && isPending(r.status);
+      }).length;
+      setBadge("admin-visit-requests.html", "Visit Requests", pendingVisits, "#0EA5E9");
+
+      // 3. Finance & Settlements Pending
+      let pendingSettlements = 0;
+      try {
+        const setRes = await apiGet("/api/admin/settlements");
+        const settlements = (setRes && setRes.data) || JSON.parse(localStorage.getItem("tansu_settlements") || "[]");
+        pendingSettlements = settlements.filter(s => {
+          const st = (s.status || s.settlementStatus || "").toString().toUpperCase();
+          return st === "PENDING";
+        }).length;
+      } catch(err){}
+      setBadge("admin-finance.html", "Finance & Settlements", pendingSettlements, "#10B981");
+
+      // 4. Support Tickets Pending
+      let openSupportCount = 0;
+      try {
+        const supportRes = await apiGet("/api/admin/support");
+        const tickets = (supportRes && supportRes.data) || JSON.parse(localStorage.getItem("tansu_support") || "[]");
+        openSupportCount = tickets.filter(t => {
+          const st = (t.status || "").toString().toUpperCase();
+          return st === "OPEN" || st === "INVESTIGATING" || st === "PENDING";
+        }).length;
+      } catch(err){}
+      setBadge("admin-support.html", "Complaints & Support", openSupportCount, "#EC4899");
+    } catch(e) {
+      console.warn("[AdminController] Sidebar update error:", e);
+    }
   },
 
   async initDashboard() {
     this.updateSidebarCounts();
     if (!Auth.requireAuth(["ADMIN"])) return;
+
+    // Real-time live count updates when any request is submitted
+    if (!this._sidebarInterval) {
+      this._sidebarInterval = setInterval(() => {
+        this.updateSidebarCounts();
+      }, 4000);
+      window.addEventListener("storage", () => {
+        this.updateSidebarCounts();
+      });
+    }
 
     // Load High-Level Platform KPIs
     const propsRes = await apiGet("/api/properties");
@@ -235,7 +323,7 @@ const AdminController = {
     }
 
     if (reqs.length === 0) {
-      reqs = JSON.parse("[]" || "[]");
+      reqs = JSON.parse(localStorage.getItem("tansu_requests") || "[]");
     }
 
     if (filterType !== "ALL") {
@@ -315,7 +403,7 @@ const AdminController = {
     }
 
     // Also update localStorage for offline cache
-    let localReqs = JSON.parse("[]" || "[]");
+    let localReqs = JSON.parse(localStorage.getItem("tansu_requests") || "[]");
     localReqs = localReqs.map(r => (r.requestId === requestId || String(r.id) === String(requestId)) ? { ...r, status: newStatus } : r);
     localStorage.setItem("tansu_requests", JSON.stringify(localReqs));
 

@@ -13,6 +13,7 @@
 const OwnerController = {
   // Temporary browser preview images array for current session
   _stagedImagePreviews: [],
+  _availableBalance: 0,
 
   async initDashboard() {
     if (!Auth.requireAuth(["OWNER"])) return;
@@ -32,10 +33,6 @@ const OwnerController = {
 
   /**
    * Load and render the owner's listed properties into #owner-properties-table-body.
-   * If a property was rejected or removed by Admin:
-   *  - verificationStatus is displayed as REJECTED (badge-rejected)
-   *  - availability is displayed as INACTIVE (badge-rejected)
-   * Only VERIFIED / APPROVED properties count toward verified KPIs and public listing.
    */
   async loadOwnerProperties(ownerId) {
     const tableBody = document.getElementById("owner-properties-table-body");
@@ -57,28 +54,62 @@ const OwnerController = {
       if (!tableBody) return;
 
       if (properties.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">You haven\'t listed any properties yet.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: 2.5rem;">You haven\'t listed any properties yet.<br><a href="owner-add-property.html" class="btn btn-sm btn-primary mt-3">+ Add Your First Listing</a></td></tr>';
         return;
       }
 
       tableBody.innerHTML = properties.map(p => {
+        const isRejected = p.status === 'REJECTED' || p.verificationStatus === 'REJECTED' || p.availabilityStatus === 'REJECTED';
+        const isVerified = (p.status === 'APPROVED' || p.verificationStatus === 'VERIFIED') && !isRejected;
+        
         let statusBadge = '';
-        if (p.status === 'REJECTED' || p.verificationStatus === 'REJECTED') {
-            statusBadge = '<span class="badge badge-rejected">REJECTED</span>';
-        } else if (p.status === 'APPROVED' || p.verificationStatus === 'VERIFIED') {
-            statusBadge = '<span class="badge badge-success">VERIFIED</span>';
+        if (isRejected) {
+          statusBadge = '<span class="badge badge-rejected">REJECTED</span>';
+        } else if (isVerified) {
+          statusBadge = '<span class="badge badge-success">VERIFIED</span>';
         } else {
-            statusBadge = '<span class="badge badge-warning">PENDING</span>';
+          statusBadge = '<span class="badge badge-warning">PENDING</span>';
         }
 
-        const isInactive = p.availabilityStatus === 'INACTIVE';
-        const availBadge = isInactive 
-            ? '<span class="badge badge-rejected">INACTIVE</span>' 
-            : '<span class="badge badge-success">ACTIVE</span>';
-            
-        const toggleBtn = isInactive 
-            ? `<button class="btn btn-sm btn-outline" onclick="OwnerController.togglePropertyStatus('${p.propertyId}', 'AVAILABLE')">Activate</button>`
-            : `<button class="btn btn-sm btn-outline" onclick="OwnerController.togglePropertyStatus('${p.propertyId}', 'INACTIVE')">Deactivate</button>`;
+        const availStr = (p.availabilityStatus || "").toUpperCase();
+        const isRented = availStr.includes("RENTED");
+        const isSold = availStr.includes("SOLD");
+        const isInactive = availStr === 'INACTIVE';
+
+        let availBadge = '';
+        let actionButtons = '';
+
+        if (isRejected) {
+          availBadge = '<span class="badge badge-rejected">BLOCKED</span>';
+          actionButtons = `<button class="btn btn-sm btn-outline" style="color:var(--color-danger); border-color:var(--color-danger);" onclick="OwnerController.deleteProperty('${p.propertyId}')">Remove</button>`;
+        } else if (isRented) {
+          availBadge = '<span class="badge badge-rent" style="background:#DBEAFE; color:#1E40AF; font-weight:700;">RENTED</span>';
+          actionButtons = `
+            <div class="flex gap-1 items-center">
+              <span class="badge badge-pending" style="font-size:0.75rem; padding: 3px 8px;">Occupied Flat</span>
+              <a href="property-details.html?id=${p.propertyId}" target="_blank" class="btn btn-sm btn-outline">View</a>
+            </div>
+          `;
+        } else if (isSold) {
+          availBadge = '<span class="badge badge-sale" style="background:#FEE2E2; color:#DC2626; font-weight:700;">SOLD</span>';
+          actionButtons = `<span class="badge badge-verified" style="font-size:0.75rem; padding: 3px 8px;">Transferred</span>`;
+        } else if (isInactive) {
+          availBadge = '<span class="badge badge-rejected">INACTIVE</span>';
+          actionButtons = `
+            <div class="flex gap-1">
+              <button class="btn btn-sm btn-outline" onclick="OwnerController.togglePropertyStatus('${p.propertyId}', 'AVAILABLE')">Activate</button>
+              <button class="btn btn-sm btn-outline" style="color:var(--color-danger); border-color:var(--color-danger);" onclick="OwnerController.deleteProperty('${p.propertyId}')">Remove</button>
+            </div>
+          `;
+        } else {
+          availBadge = '<span class="badge badge-success">ACTIVE</span>';
+          actionButtons = `
+            <div class="flex gap-1">
+              <button class="btn btn-sm btn-outline" onclick="OwnerController.togglePropertyStatus('${p.propertyId}', 'INACTIVE')">Deactivate</button>
+              <button class="btn btn-sm btn-outline" style="color:var(--color-danger); border-color:var(--color-danger);" onclick="OwnerController.deleteProperty('${p.propertyId}')">Remove</button>
+            </div>
+          `;
+        }
 
         return `
         <tr>
@@ -88,20 +119,346 @@ const OwnerController = {
           </td>
           <td>${p.title}</td>
           <td>${p.purpose === 'SALE' ? 'PROPERTY SALE' : 'RENTAL LEASE'}</td>
-          <td><strong>BDT ${p.price ? p.price.toLocaleString() : 0}</strong> ${p.purpose === 'SALE' ? '' : '/ month'}</td>
+          <td><strong>BDT ${p.price ? Number(p.price).toLocaleString() : 0}</strong> ${p.purpose === 'SALE' ? '' : '/ month'}</td>
           <td>${statusBadge}</td>
           <td>${availBadge}</td>
-          <td>
-            <div class="flex gap-1">
-              ${toggleBtn}
-              <button class="btn btn-sm btn-outline" style="color:var(--color-danger); border-color:var(--color-danger);" onclick="OwnerController.deleteProperty('${p.propertyId}')">Remove</button>
-            </div>
-          </td>
+          <td>${actionButtons}</td>
         </tr>`;
       }).join('');
     } catch (e) {
       console.warn('Error loading properties:', e);
       if (tableBody) tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-danger">Failed to load properties.</td></tr>';
+    }
+  },
+
+  /**
+   * Load Verified Flat Rented & Sold Earnings Ledger (#owner-earnings-table-body)
+   */
+  async loadOwnerEarnings(ownerId) {
+    const tableBody = document.getElementById("owner-earnings-table-body");
+    if (!tableBody) return;
+
+    let props = [];
+    try {
+      const propRes = await apiGet("/api/properties", { ownerId });
+      props = propRes.data || [];
+    } catch(e){}
+
+    let settlements = [];
+    try {
+      const setRes = await apiGet("/api/owner/settlements", { ownerId });
+      settlements = setRes.data || [];
+    } catch(e){}
+
+    let requests = [];
+    try {
+      const reqRes = await apiGet("/api/requests");
+      requests = reqRes.data || [];
+    } catch (e) {}
+
+    const verifiedProps = props.filter(p => p.status === "APPROVED" || p.verificationStatus === "VERIFIED");
+    const earningItems = [];
+
+    verifiedProps.forEach(p => {
+      const availStr = (p.availabilityStatus || "").toUpperCase();
+      const matchingSettlement = settlements.find(s => s.propertyId === p.propertyId);
+      const isRented = availStr.includes("RENTED") || (matchingSettlement && matchingSettlement.type === "RENTAL_INCOME");
+      const isSold = availStr.includes("SOLD") || (matchingSettlement && matchingSettlement.type === "SALE_PROCEEDS");
+
+      if (isRented || isSold) {
+        const matchingReq = requests.find(r => r.propertyId === p.propertyId && (r.status === "APPROVED" || r.status === "PENDING"));
+        let occupant = "Verified Tenant";
+        if (matchingReq && matchingReq.tenantName) {
+          occupant = `${matchingReq.tenantName} (${matchingReq.tenantId || 'TNT'})`;
+        } else if (p.occupant) {
+          occupant = p.occupant;
+        }
+
+        const isSettled = matchingSettlement && matchingSettlement.status === "SETTLED";
+        const agreementRate = Number(p.price || (matchingSettlement ? matchingSettlement.amount : 0) || 0);
+        const creditedAmount = matchingSettlement ? Number(matchingSettlement.entitledAmount) : Math.round(agreementRate * 0.8);
+
+        earningItems.push({
+          propertyId: p.propertyId,
+          title: p.title,
+          location: p.location,
+          type: isSold ? "SALE" : "RENT",
+          tenant: occupant,
+          agreementRate: agreementRate,
+          creditedAmount: creditedAmount,
+          isSettled: isSettled,
+          status: isSettled ? "Rent Cleared & Disbursed" : (isSold ? "Sold & Transferred" : "Active Tenancy")
+        });
+      }
+    });
+
+    if (earningItems.length === 0) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="6" class="text-center text-muted" style="padding: 2.5rem;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.35rem;"></div>
+            <strong>No active rented or sold properties yet.</strong><br>
+            <span style="font-size: 0.85rem;">Once your verified properties are leased or sold to tenants/buyers, revenue inflows will appear here.</span>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tableBody.innerHTML = earningItems.map(item => {
+      const isSale = item.type === "SALE";
+      return `
+        <tr>
+          <td>
+            <strong>${item.propertyId}</strong><br>
+            <small class="text-muted">${item.title} (${item.location})</small>
+            <div style="font-size:0.8rem; color:var(--color-primary); margin-top:2px;">Occupant: ${item.tenant}</div>
+          </td>
+          <td>
+            <span class="badge ${isSale ? 'badge-sale' : 'badge-rent'}">
+              ${isSale ? 'FLAT PURCHASE' : 'RENTAL LEASE'}
+            </span>
+          </td>
+          <td><strong>BDT ${item.agreementRate.toLocaleString()}</strong> ${isSale ? '' : '/ month'}</td>
+          <td>
+            <strong style="color:var(--color-success); font-size: 1.05rem;">BDT ${item.creditedAmount.toLocaleString()}</strong>
+            <br><small class="text-muted">Net 80% Payout</small>
+          </td>
+          <td>
+            <span class="badge ${item.isSettled ? 'badge-verified' : 'badge-available'}">
+              ${item.status}
+            </span>
+          </td>
+          <td>
+            ${item.isSettled 
+              ? '<span class="badge badge-verified" style="background:#DCFCE7; color:#166534; font-weight:700;">Disbursed by Admin</span>'
+              : '<span class="badge badge-available" style="background:#FEF3C7; color:#92400E; font-weight:700;">Credited to Balance</span>'
+            }
+          </td>
+        </tr>
+      `;
+    }).join("");
+  },
+
+  /**
+   * Load Settlements & Payouts (#owner-settlements-table-body)
+   */
+  async loadOwnerSettlements(ownerId) {
+    const tableBody = document.getElementById("owner-settlements-table-body");
+    const kpiEarned = document.getElementById("kpi-owner-total-earned");
+    const kpiAvailable = document.getElementById("kpi-owner-available-balance");
+    const kpiReceived = document.getElementById("kpi-owner-total-received");
+
+    let settlements = [];
+    try {
+      const res = await apiGet("/api/owner/settlements", { ownerId });
+      if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+        settlements = res.data;
+      }
+    } catch (e) {
+      console.warn("API settlements fetch error:", e);
+    }
+
+    if (settlements.length === 0) {
+      try {
+        const stored = JSON.parse(localStorage.getItem("tansu_settlements") || "[]");
+        settlements = stored.filter(s => s.ownerId === ownerId);
+      } catch (e) {}
+    }
+
+    // Calculations
+    const totalEarned = settlements
+      .filter(s => s.type !== "WITHDRAWAL_REQUEST")
+      .reduce((sum, s) => sum + Number(s.entitledAmount || s.amount || 0), 0);
+
+    const totalDisbursed = settlements
+      .filter(s => s.status === "SETTLED")
+      .reduce((sum, s) => sum + Number(s.disbursed != null ? s.disbursed : (s.entitledAmount || 0)), 0);
+
+    const pendingWithdrawals = settlements
+      .filter(s => s.type === "WITHDRAWAL_REQUEST" && s.status !== "SETTLED" && s.status !== "REJECTED")
+      .reduce((sum, s) => sum + Number(s.entitledAmount || 0), 0);
+
+    const availableBalance = Math.max(0, totalEarned - totalDisbursed - pendingWithdrawals);
+    this._availableBalance = availableBalance;
+
+    if (kpiEarned) kpiEarned.textContent = `BDT ${totalEarned.toLocaleString()}`;
+    if (kpiAvailable) kpiAvailable.textContent = `BDT ${availableBalance.toLocaleString()}`;
+    if (kpiReceived) kpiReceived.textContent = `BDT ${totalDisbursed.toLocaleString()}`;
+
+    if (!tableBody) return;
+
+    if (settlements.length === 0) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center text-muted" style="padding: 2.5rem;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.35rem;"></div>
+            <strong style="color: var(--color-primary);">No Settlement Records</strong><br>
+            <span style="font-size: 0.85rem;">When tenants pay rent or purchase your verified properties, you can submit withdrawal requests to disburse funds.</span>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tableBody.innerHTML = settlements.map(s => {
+      const isWithdrawal = s.type === "WITHDRAWAL_REQUEST";
+      const isSettled = s.status === "SETTLED";
+      const isPending = s.status === "PENDING_ADMIN_APPROVAL" || s.status === "PENDING_AUDIT" || s.status === "PENDING";
+      let statusBadge = isSettled ? 'badge-verified' : (isPending ? 'badge-pending' : 'badge-available');
+      let statusLabel = isSettled ? 'Disbursed' : (isPending ? 'Awaiting Admin Approval' : (s.status || 'Available'));
+
+      const dest = s.bankName || (s.payoutMethod ? `${s.payoutMethod}` : 'Designated Bank Account');
+      const totalCollected = Number(s.totalCollected || s.amount || (isWithdrawal ? s.entitledAmount : 0));
+      const commission = Number(s.commissionFee || s.systemCommission || 0);
+      const ownerPayout = Number(s.entitledAmount || 0);
+      const commissionRate = s.commissionRate || '20%';
+
+      return `
+        <tr>
+          <td>
+            <strong>${s.settlementId}</strong><br>
+            <small class="text-muted">${s.propertyId || 'Portfolio'}</small>
+          </td>
+          <td>
+            <span class="badge ${isWithdrawal ? 'badge-rent' : (s.type === 'SALE_PROCEEDS' ? 'badge-sale' : 'badge-available')}">
+              ${isWithdrawal ? 'WITHDRAWAL REQUEST' : (s.type === 'SALE_PROCEEDS' ? 'SALE PROCEEDS' : 'RENTAL REMITTANCE')}
+            </span>
+          </td>
+          <td>
+            ${!isWithdrawal && totalCollected > 0 ? `
+              <div style="font-size:0.78rem; color:var(--color-text-muted); margin-bottom:0.15rem;">Listing Amount: <strong>BDT ${totalCollected.toLocaleString()}</strong></div>
+              <div style="font-size:0.78rem; color:var(--color-danger); margin-bottom:0.15rem;">Commission (${commissionRate}): − BDT ${commission.toLocaleString()}</div>
+            ` : ''}
+            <strong style="color:${isWithdrawal ? 'var(--color-danger)' : 'var(--color-success)'}; font-size:1.05rem;">BDT ${ownerPayout.toLocaleString()}</strong>
+            ${!isWithdrawal ? '<br><small class="text-muted">Your Payout (80%)</small>' : ''}
+          </td>
+          <td>
+            <strong>${dest}</strong>
+            ${s.payoutDetails && s.payoutDetails.accountNumber ? `<br><small class="text-muted">A/C: ${s.payoutDetails.accountNumber}</small>` : ''}
+          </td>
+          <td>${s.requestDate || s.clearanceDate || 'Recent'}</td>
+          <td>
+            <span class="badge ${statusBadge}">
+              ${statusLabel}
+            </span>
+          </td>
+          <td>
+            ${isSettled 
+              ? `<span style="color:var(--color-success); font-weight:700;">Disbursed on ${s.clearanceDate || 'Audit'}</span>` 
+              : (isPending 
+                  ? `<span class="text-muted" style="font-size:0.85rem;">Under Admin Review</span>` 
+                  : `<button class="btn btn-sm btn-outline" onclick="OwnerController.openWithdrawModal()">Withdraw</button>`)
+            }
+          </td>
+        </tr>
+      `;
+    }).join("");
+  },
+
+  openWithdrawModal() {
+    const modalDisplay = document.getElementById("modal-available-balance-display");
+    if (modalDisplay) {
+      modalDisplay.textContent = `BDT ${this._availableBalance.toLocaleString()}`;
+    }
+    const amountInput = document.getElementById("withdraw-amount");
+    if (amountInput) {
+      amountInput.max = Math.max(0, this._availableBalance);
+      if (this._availableBalance < 500) {
+        amountInput.min = 0;
+        amountInput.disabled = true;
+        amountInput.value = 0;
+      } else {
+        amountInput.min = 500;
+        amountInput.disabled = false;
+        amountInput.value = this._availableBalance;
+      }
+    }
+    Components.openModal("modal-request-withdrawal");
+  },
+
+  togglePayoutFields() {
+    const method = document.getElementById("withdraw-payout-method")?.value;
+    const bankFields = document.getElementById("payout-bank-fields");
+    const mfsFields = document.getElementById("payout-mfs-fields");
+
+    if (method === "BANK_TRANSFER") {
+      if (bankFields) bankFields.style.display = "block";
+      if (mfsFields) mfsFields.style.display = "none";
+    } else {
+      if (bankFields) bankFields.style.display = "none";
+      if (mfsFields) mfsFields.style.display = "block";
+    }
+  },
+
+  async submitWithdrawalRequest(e) {
+    if (e) e.preventDefault();
+    const user = Auth.getCurrentUser();
+    if (!user) return;
+
+    const amountInput = document.getElementById("withdraw-amount");
+    const amount = Number(amountInput?.value || 0);
+
+    if (amount <= 0) {
+      Components.showToast("error", "Invalid Amount", "Please enter a valid withdrawal amount greater than 0.");
+      return;
+    }
+
+    if (amount > this._availableBalance) {
+      Components.showToast("warning", "Insufficient Balance", `Requested BDT ${amount.toLocaleString()} exceeds your available balance of BDT ${this._availableBalance.toLocaleString()}.`);
+      return;
+    }
+
+    const method = document.getElementById("withdraw-payout-method")?.value || "BANK_TRANSFER";
+    const note = document.getElementById("withdraw-note")?.value?.trim() || "";
+
+    let payoutDetails = {};
+    let methodLabel = "Bank Transfer";
+
+    if (method === "BANK_TRANSFER") {
+      const bank = document.getElementById("withdraw-bank-name")?.value?.trim() || "BRAC Bank PLC";
+      const acc = document.getElementById("withdraw-bank-account")?.value?.trim() || "150120XXXXXX";
+      const holder = document.getElementById("withdraw-bank-holder")?.value?.trim() || user.name;
+      const branch = document.getElementById("withdraw-bank-branch")?.value?.trim() || "";
+      methodLabel = `${bank} (BEFTN)`;
+      payoutDetails = { bankName: bank, accountNumber: acc, accountHolder: holder, branch };
+    } else {
+      const mfsNumber = document.getElementById("withdraw-mfs-number")?.value?.trim() || user.phone || "017XXXXXXXX";
+      const mfsType = document.getElementById("withdraw-mfs-type")?.value || "Personal";
+      methodLabel = `${method} (${mfsType} - ${mfsNumber})`;
+      payoutDetails = { provider: method, accountNumber: mfsNumber, accountType: mfsType };
+    }
+
+    const submitBtn = document.getElementById("btn-submit-withdraw");
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting to Admin...";
+    }
+
+    try {
+      await apiPost("/api/owner/withdraw", {
+        ownerId: user.userId,
+        ownerName: user.name,
+        amount: amount,
+        payoutMethod: methodLabel,
+        payoutDetails: payoutDetails,
+        note: note
+      });
+
+      Components.closeModal("modal-request-withdrawal");
+      Components.showToast("success", "Withdrawal Request Submitted", `Your request for BDT ${amount.toLocaleString()} has been sent to TANSU Admin for review and disbursement.`);
+      
+      // Refresh views
+      await this.loadOwnerSettlements(user.userId);
+      await this.loadOwnerEarnings(user.userId);
+    } catch (err) {
+      console.error("Withdrawal error:", err);
+      Components.showToast("error", "Error", "Could not submit withdrawal request. Please try again.");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Withdrawal Request";
+      }
     }
   },
 
@@ -264,5 +621,3 @@ const OwnerController = {
     this.renderImagePreviews();
   }
 };
-
-

@@ -1292,8 +1292,9 @@ const LocalDataStore = {
     if (endpoint === "/api/requests" || endpoint === "/api/tenant/requests") {
       const reqs = JSON.parse(localStorage.getItem("tansu_requests") || "[]");
       const user = JSON.parse(localStorage.getItem("tansu_current_user") || "null");
-      const targetId = params.userId || params.tenantId || (user ? user.userId : null);
-      const targetEmail = params.email || (user ? user.email : null);
+      const isPrivileged = user && (user.role === "ADMIN" || user.role === "EMPLOYEE");
+      const targetId = params.userId || params.tenantId || (!isPrivileged && user ? user.userId : null);
+      const targetEmail = params.email || (!isPrivileged && user ? user.email : null);
       if (targetId || targetEmail) {
         const userReqs = reqs.filter(r => (targetId && r.tenantId === targetId) || (targetEmail && r.tenantEmail === targetEmail));
         return { success: true, count: userReqs.length, data: userReqs };
@@ -1365,6 +1366,11 @@ const LocalDataStore = {
     if (endpoint === "/api/admin/notices") {
       const notices = JSON.parse(localStorage.getItem("tansu_notices") || "[]");
       return { success: true, count: notices.length, data: notices };
+    }
+
+    if (endpoint === "/api/admin/support" || endpoint === "/api/tenant/support" || endpoint === "/api/support") {
+      const tickets = JSON.parse(localStorage.getItem("tansu_support") || "[]");
+      return { success: true, count: tickets.length, data: tickets };
     }
 
     return { success: true, data: [] };
